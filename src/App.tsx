@@ -66,7 +66,7 @@ export default function App() {
         phone: form.phone,
         clinic: form.clinic_name,
         message: form.message,
-        source: 'DentaGrow Website',
+        source: 'DentaGrow Website - Practice Lead',
         pageUrl: window.location.href,
       });
 
@@ -92,16 +92,19 @@ export default function App() {
   };
 
   const EMAIL = 'avinashjayaintelligentgroup@gmail.com';
-  const PAYMENT_AMOUNT = 199;
-  const ORIGINAL_AMOUNT = 399;
+  const PAYMENT_URL = SKYDO_PAYMENT_URL;
+  const goToPayment = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!PAYMENT_URL) {
+      e.preventDefault();
+      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const s1=useTilt(9),s2=useTilt(9),s3=useTilt(9),s4=useTilt(9); const sR=[s1,s2,s3,s4];
   const w1=useTilt(7),w2=useTilt(7),w3=useTilt(7),w4=useTilt(7),w5=useTilt(7),w6=useTilt(7); const wR=[w1,w2,w3,w4,w5,w6];
-  const o1=useTilt(7),o2=useTilt(7),o3=useTilt(7),o4=useTilt(7),o5=useTilt(7),o6=useTilt(7); const oR=[o1,o2,o3,o4,o5,o6];
   const t1=useTilt(6),t2=useTilt(6),t3=useTilt(6); const tR=[t1,t2,t3];
-  const m1=useTilt(6),m2=useTilt(6),m3=useTilt(6); const mR=[m1,m2,m3];
 
-  const NAV = ['How It Works','Why Us','Results','Contact'];
+  const NAV = ['How It Works','Insurance','Why Us','Results','Contact'];
 
   return (
     <div style={{background:'#040d1a',color:'#f0f6ff',fontFamily:"'Inter',system-ui,sans-serif",minHeight:'100vh',overflowX:'hidden'}}>
@@ -117,7 +120,7 @@ export default function App() {
           </div>
           <div>
             <div style={{fontWeight:800,fontSize:14,color:'#fff',lineHeight:1.1,letterSpacing:'-0.02em'}}>AJ Intelligent Group</div>
-            <div style={{fontSize:9,color:'rgba(0,196,160,0.75)',fontWeight:600,letterSpacing:'0.04em'}}>DentaGrow · Dental Practice Systems</div>
+            <div style={{fontSize:9,color:'rgba(0,196,160,0.75)',fontWeight:600,letterSpacing:'0.04em'}}>AI Growth Systems · SF Dental</div>
           </div>
         </a>
 
@@ -125,8 +128,8 @@ export default function App() {
           {NAV.map(l=>(
             <a key={l} href={`#${l.toLowerCase().replace(/\s+/g,'-')}`} className="nav-lnk">{l}</a>
           ))}
-          <a href="#reserve" className="btn-cta btn-sm">
-            <span className="ci">🔒</span>Reserve Consultation · $199<span className="arr">→</span>
+          <a href="#contact" className="btn-cta btn-sm">
+            <span className="ci">✦</span>See If We Can Help<span className="arr">→</span>
           </a>
         </div>
 
@@ -141,8 +144,8 @@ export default function App() {
         {NAV.map(l=>(
           <a key={l} href={`#${l.toLowerCase().replace(/\s+/g,'-')}`} className="mob-lnk" onClick={()=>setMenuOpen(false)}>{l}</a>
         ))}
-        <a href="#reserve" className="btn-cta" style={{marginTop:10,justifyContent:'center'}} onClick={()=>setMenuOpen(false)}>
-          <span className="ci">🔒</span>Reserve Consultation · $199<span className="arr">→</span>
+        <a href="#contact" onClick={()=>setMenuOpen(false)} className="btn-cta" style={{marginTop:10,justifyContent:'center'}}>
+          <span className="ci">✦</span>See If We Can Help<span className="arr">→</span>
         </a>
       </div>
 
@@ -152,104 +155,467 @@ export default function App() {
         <div style={{position:'absolute',inset:0,background:'linear-gradient(150deg,rgba(4,13,26,0.97) 0%,rgba(4,26,40,0.92) 55%,rgba(4,13,26,0.97) 100%)'}}/>
         <div style={{position:'absolute',inset:0,backgroundImage:'linear-gradient(rgba(0,196,160,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,196,160,0.04) 1px,transparent 1px)',backgroundSize:'56px 56px',transform:'perspective(550px) rotateX(8deg)',transformOrigin:'top center',pointerEvents:'none',opacity:0.8}}/>
         <div className="orb orb1"/><div className="orb orb2"/><div className="orb orb3"/>
+
         <div style={{position:'relative',zIndex:2,maxWidth:680,width:'100%'}}>
-          <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'rgba(0,196,160,0.1)',border:'1px solid rgba(0,196,160,0.3)',borderRadius:100,padding:'6px 14px',marginBottom:24}}><div className="pdot"/><span style={{fontSize:11.5,fontWeight:600,color:'#00c4a0',letterSpacing:'0.04em'}}>AJ Intelligent Group · DentaGrow for Dental Practices</span></div>
-          <h1 style={{fontWeight:900,fontSize:'clamp(28px,5.2vw,66px)',lineHeight:1.09,letterSpacing:'-0.04em',color:'#fff',marginBottom:20,textShadow:'0 4px 40px rgba(0,196,160,0.18)'}}><span style={{background:'linear-gradient(90deg,#00e676,#00c4a0)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>Run More of Your Practice</span><br/>With Less Front-Desk Work</h1>
-          <p style={{fontSize:'clamp(13.5px,2vw,17px)',color:'rgba(200,220,255,0.72)',lineHeight:1.72,maxWidth:565,marginBottom:34,fontWeight:300}}>DentaGrow connects patient communication, scheduling, follow-up, recall and reporting into one automation layer — so your team spends less time chasing repetitive tasks and more time taking care of patients.</p>
-          <div style={{display:'flex',gap:12,flexWrap:'wrap',marginBottom:32}}><a href="#reserve" className="btn-cta"><span className="ci">🔒</span>Reserve Your Consultation · $199<span className="arr">→</span></a><a href="#reserve" className="btn-ghost">Review the Secure Reservation →</a></div>
-          <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>{['✓ Automate repeatable work','✓ Keep humans in control','✓ Add patient acquisition when needed','✓ Built for dental workflows'].map(t=><span key={t} style={{background:'rgba(255,255,255,0.05)',border:'1px solid rgba(255,255,255,0.1)',borderRadius:100,padding:'4px 11px',fontSize:11.5,fontWeight:500,color:'rgba(255,255,255,0.65)'}}>{t}</span>)}</div>
+          <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'rgba(0,196,160,0.1)',border:'1px solid rgba(0,196,160,0.3)',borderRadius:100,padding:'6px 14px',marginBottom:24}}>
+            <div className="pdot"/>
+            <span style={{fontSize:11.5,fontWeight:600,color:'#00c4a0',letterSpacing:'0.04em'}}>AJ Intelligent Group · Serving San Francisco Dental Clinics</span>
+          </div>
+
+          <h1 style={{fontWeight:900,fontSize:'clamp(28px,5.2vw,66px)',lineHeight:1.09,letterSpacing:'-0.04em',color:'#fff',marginBottom:20,textShadow:'0 4px 40px rgba(0,196,160,0.18)'}}>
+            Give Your Dental Team
+            <span style={{background:'linear-gradient(90deg,#00e676,#00c4a0)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}> Less Repetitive Work</span><br/>
+            <span style={{background:'linear-gradient(90deg,#00c4a0,#1e7fff)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>More Control Over Every Patient Journey</span>
+          </h1>
+
+          <p style={{fontSize:'clamp(13.5px,2vw,17px)',color:'rgba(200,220,255,0.72)',lineHeight:1.72,maxWidth:560,marginBottom:34,fontWeight:300}}>
+            Your team should not spend the day chasing missed calls, confirmations, follow-ups, recall patients or insurance exceptions. DentaGrow connects those repetitive workflows into one managed system—so your staff can spend more attention where a real person is needed.
+          </p>
+
+          <div style={{display:'flex',gap:12,flexWrap:'wrap',marginBottom:32}}>
+            <a href="#contact" className="btn-cta"><span className="ci">✦</span>See If DentaGrow Fits Your Practice<span className="arr">→</span></a>
+            <a href="#how-it-works" className="btn-ghost">See How It Works</a>
+          </div>
+
+          <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
+            {['✓ No payment required to submit your details','✓ Insurance workflow support','✓ Website + chatbot when needed','✓ Human escalation built in'].map(t=>(
+              <span key={t} style={{background:'rgba(255,255,255,0.05)',border:'1px solid rgba(255,255,255,0.1)',borderRadius:100,padding:'4px 11px',fontSize:11.5,fontWeight:500,color:'rgba(255,255,255,0.65)'}}>{t}</span>
+            ))}
+          </div>
         </div>
-        <div className="hero-wrap"><div className="hero-dash">
-          <div style={{fontSize:10.5,color:'rgba(255,255,255,0.35)',marginBottom:16,display:'flex',alignItems:'center',gap:6}}><div style={{width:6,height:6,borderRadius:'50%',background:'#00c4a0',boxShadow:'0 0 6px #00c4a0'}}/>DentaGrow Practice View · Example</div>
-          {[{label:'Appointments Today',value:'18',color:'#00c4a0'},{label:'Follow-ups Due',value:'07',color:'#1e7fff'},{label:'Human Attention',value:'02',color:'#f59e0b'}].map((x,i)=><div key={x.label} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'11px 0',borderBottom:'1px solid rgba(255,255,255,0.05)',animation:`sIn 0.5s ease ${i*0.13}s both`}}><span style={{fontSize:12.5,color:'rgba(255,255,255,0.5)'}}>{x.label}</span><span style={{fontSize:22,fontWeight:900,color:x.color,textShadow:`0 0 18px ${x.color}88`}}>{x.value}</span></div>)}
-          <div style={{marginTop:14,background:'rgba(0,196,160,0.08)',border:'1px solid rgba(0,196,160,0.2)',borderRadius:10,padding:'11px 13px'}}><div style={{fontSize:10.5,color:'#00c4a0',fontWeight:600}}>✓ Example: workflow active</div><div style={{fontSize:10.5,color:'rgba(255,255,255,0.35)',marginTop:3}}>Automation routes exceptions to your team</div></div>
-          <div className="dl1"/><div className="dl2"/>
-        </div></div>
+
+        <div className="hero-wrap">
+          <div className="hero-dash">
+            <div style={{fontSize:10.5,color:'rgba(255,255,255,0.35)',marginBottom:16,display:'flex',alignItems:'center',gap:6}}>
+              <div style={{width:6,height:6,borderRadius:'50%',background:'#00c4a0',boxShadow:'0 0 6px #00c4a0'}}/>
+              DentaGrow Dashboard · This Month
+            </div>
+            {[{label:'New Inquiries',value:'—',color:'#00c4a0'},{label:'Appointments',value:'—',color:'#1e7fff'},{label:'Follow-ups',value:'—',color:'#00e676'}].map((s,i)=>(
+              <div key={s.label} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'11px 0',borderBottom:'1px solid rgba(255,255,255,0.05)',animation:`sIn 0.5s ease ${i*0.13}s both`}}>
+                <span style={{fontSize:12.5,color:'rgba(255,255,255,0.5)'}}>{s.label}</span>
+                <span style={{fontSize:22,fontWeight:900,color:s.color,textShadow:`0 0 18px ${s.color}88`}}>{s.value}</span>
+              </div>
+            ))}
+            <div style={{marginTop:14,background:'rgba(0,196,160,0.08)',border:'1px solid rgba(0,196,160,0.2)',borderRadius:10,padding:'11px 13px'}}>
+              <div style={{fontSize:10.5,color:'#00c4a0',fontWeight:600}}>✓ Human attention stays visible</div>
+              <div style={{fontSize:10.5,color:'rgba(255,255,255,0.35)',marginTop:3}}>Automations route routine work and escalate exceptions.</div>
+            </div>
+            <div className="dl1"/><div className="dl2"/>
+          </div>
+        </div>
       </section>
 
       {/* TICKER */}
-      <div className="ticker-bar"><div className="ticker-tr">{['⚙ Scheduling workflows','📞 Missed-call recovery','🔁 Recall & reactivation','💬 Patient communication','📊 Practice reporting','🧩 Connected automation','🎯 Local patient acquisition when needed','🧑‍⚕️ Human escalation'].flatMap(t=>[t,t]).map((t,i)=><span key={i} className="tick-i">{t}<span style={{color:'rgba(0,196,160,0.38)',fontSize:9,marginLeft:8}}>◆</span></span>)}</div></div>
+      <div className="ticker-bar">
+        <div className="ticker-tr">
+          {['📝 Start with a practice review','🛡 Insurance workflow support','🌐 Website when needed','💬 Chat + patient capture','📞 Voice + missed-call recovery','♻️ Recall + reactivation','📊 Practice-level reporting','👤 Human escalation built in'].flatMap(t=>[t,t]).map((t,i)=>(
+            <span key={i} className="tick-i">{t}<span style={{color:'rgba(0,196,160,0.38)',fontSize:9,marginLeft:8}}>◆</span></span>
+          ))}
+        </div>
+      </div>
 
-      {/* OPERATING SIGNALS */}
-      <section id="results" style={{borderBottom:'1px solid rgba(255,255,255,0.06)',background:'rgba(255,255,255,0.02)',position:'relative',overflow:'hidden'}}><div style={{position:'absolute',inset:0,background:'radial-gradient(ellipse at 50% 50%, rgba(0,196,160,0.04) 0%, transparent 70%)',pointerEvents:'none'}}/><div className="sg" style={{maxWidth:1100,margin:'0 auto'}}>{[{num:'01',label:'Capture',sub:'Bring inquiries into one workflow',color:'#00c4a0',rgb:'0,196,160'},{num:'02',label:'Automate',sub:'Run repeatable communication',color:'#1e7fff',rgb:'30,127,255'},{num:'03',label:'Escalate',sub:'Route exceptions to humans',color:'#00e676',rgb:'0,230,118'},{num:'04',label:'Measure',sub:'See what needs attention',color:'#f59e0b',rgb:'245,158,11'}].map((x,i)=><div key={i} className="st" style={{borderRight:i<3?'1px solid rgba(255,255,255,0.06)':'none'}} onMouseEnter={e=>{e.currentTarget.style.background=`rgba(${x.rgb},0.05)`;e.currentTarget.style.transform='translateY(-4px)';}} onMouseLeave={e=>{e.currentTarget.style.background='';e.currentTarget.style.transform='';}}><div style={{fontWeight:900,fontSize:'clamp(32px,4vw,50px)',color:x.color,lineHeight:1,letterSpacing:'-0.04em',marginBottom:8,textShadow:`0 0 40px ${x.color}55`}}>{x.num}</div><div style={{fontWeight:700,fontSize:13,color:'#f0f6ff',marginBottom:4}}>{x.label}</div><div style={{fontSize:11.5,color:'rgba(200,220,255,0.4)'}}>{x.sub}</div></div>)}</div></section>
+      {/* STATS */}
+      <section id="overview" style={{borderBottom:'1px solid rgba(255,255,255,0.06)',background:'rgba(255,255,255,0.02)',position:'relative',overflow:'hidden'}}>
+        <div style={{position:'absolute',inset:0,background:'radial-gradient(ellipse at 50% 50%, rgba(0,196,160,0.04) 0%, transparent 70%)',pointerEvents:'none'}}/>
+        <div className="sg" style={{maxWidth:1100,margin:'0 auto'}}>
+          {[
+            {num:'Lead',label:'First Step',sub:'Your practice details are captured first',color:'#00c4a0',rgb:'0,196,160'},
+             {num:'1',label:'Managed System',sub:'Growth + operations + patient workflows',color:'#1e7fff',rgb:'30,127,255'},
+            {num:'24/7',label:'Routine Follow-Up',sub:'Automations work beyond office hours',color:'#00e676',rgb:'0,230,118'},
+            {num:'Human',label:'Escalation',sub:'Exceptions stay with your team',color:'#f59e0b',rgb:'245,158,11'},
+          ].map((s,i)=>(
+            <div key={i} className="st" style={{borderRight:i<3?'1px solid rgba(255,255,255,0.06)':'none'}}
+              onMouseEnter={e=>{e.currentTarget.style.background=`rgba(${s.rgb},0.05)`;e.currentTarget.style.transform='translateY(-4px)';}}
+              onMouseLeave={e=>{e.currentTarget.style.background='';e.currentTarget.style.transform='';}}
+            >
+              <div style={{fontWeight:900,fontSize:'clamp(32px,4vw,50px)',color:s.color,lineHeight:1,letterSpacing:'-0.04em',marginBottom:8,textShadow:`0 0 40px ${s.color}55`,filter:`drop-shadow(0 6px 12px ${s.color}44)`}}>{s.num}</div>
+              <div style={{fontWeight:700,fontSize:13,color:'#f0f6ff',marginBottom:4}}>{s.label}</div>
+              <div style={{fontSize:11.5,color:'rgba(200,220,255,0.4)'}}>{s.sub}</div>
+              <div style={{position:'absolute',bottom:0,left:'20%',right:'20%',height:2,background:`linear-gradient(90deg,transparent,${s.color}66,transparent)`,borderRadius:2}}/>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* HOW IT WORKS */}
-      <section id="how-it-works" style={{padding:'80px 5%',position:'relative',overflow:'hidden'}}><div style={{position:'absolute',bottom:0,left:0,right:0,height:'45%',backgroundImage:'linear-gradient(rgba(30,127,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(30,127,255,0.025) 1px,transparent 1px)',backgroundSize:'40px 40px',transform:'perspective(400px) rotateX(20deg)',transformOrigin:'bottom center',pointerEvents:'none'}}/><div style={{maxWidth:1100,margin:'0 auto',position:'relative',zIndex:1}}><div style={{textAlign:'center',marginBottom:52}}><div className="bdg bteal">The System</div><h2 className="sh2">From patient inquiry to <span className="gteal">practice workflow</span></h2><p className="ssub">DentaGrow connects the repeatable work around the patient journey. Your team stays in control where human judgement matters.</p></div><div style={{position:'relative'}}><div className="cline"/><div className="fg" style={{paddingTop:16}}>{[{step:'01',icon:'📥',title:'Capture Demand',desc:'New inquiries from your existing website, calls, forms, messages or DentaGrow campaigns enter one connected workflow.',color:'#1e7fff'},{step:'02',icon:'🤖',title:'Respond & Qualify',desc:'Configured AI and communication workflows handle routine questions, collect context and route anything that needs a human.',color:'#00c4a0',badge:'⚡ Automation Layer'},{step:'03',icon:'📅',title:'Book & Manage',desc:'Scheduling, confirmations, reminders, rescheduling and follow-up run from the practice rules you define.',color:'#00e676'},{step:'04',icon:'🦷',title:'Doctor Treats',desc:'Your team receives the right information and exceptions. The doctor stays focused on clinical care, not repetitive admin.',color:'#f59e0b'}].map((x,i)=><div key={i} ref={sR[i].ref} onMouseMove={sR[i].onMouseMove} onMouseLeave={sR[i].onMouseLeave} className="c3d" style={{marginTop:14}}><div className="sbdg" style={{color:x.color,border:`1px solid ${x.color}44`,boxShadow:`0 3px 10px ${x.color}33`}}>STEP {x.step}</div><div className="cico">{x.icon}</div><div className="ctit">{x.title}</div><p className="cdsc">{x.desc}</p>{x.badge&&<div className="mbdg" style={{color:'#00e676',background:'rgba(0,230,118,0.08)',border:'1px solid rgba(0,230,118,0.25)'}}>{x.badge}</div>}<div className="cgl" style={{background:`linear-gradient(90deg,transparent,${x.color},transparent)`}}/></div>)}</div></div></div></section>
+      <section id="how-it-works" style={{padding:'80px 5%',position:'relative',overflow:'hidden'}}>
+        <div style={{position:'absolute',bottom:0,left:0,right:0,height:'45%',backgroundImage:'linear-gradient(rgba(30,127,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(30,127,255,0.025) 1px,transparent 1px)',backgroundSize:'40px 40px',transform:'perspective(400px) rotateX(20deg)',transformOrigin:'bottom center',pointerEvents:'none'}}/>
+        <div style={{maxWidth:1100,margin:'0 auto',position:'relative',zIndex:1}}>
+          <div style={{textAlign:'center',marginBottom:52}}>
+            <div className="bdg bteal">The System</div>
+            <h2 className="sh2">One <span className="gteal">System</span> Around the Patient Journey</h2>
+            <p className="ssub">DentaGrow handles repetitive work around patient acquisition, communication, scheduling and retention while your team stays in control.</p>
+          </div>
+          <div style={{position:'relative'}}>
+            <div className="cline"/>
+            <div className="fg" style={{paddingTop:16}}>
+              {[
+                {step:'01',icon:'📣',title:'Attract & Capture',desc:'Use the clinic’s existing website or a DentaGrow patient-facing page when needed. Add chatbot and lead capture where appropriate.',color:'#1e7fff'},
+                {step:'02',icon:'🤖',title:'Follow Up & Qualify',desc:'Automated SMS, email and voice workflows handle routine follow-up, qualification and missed-call recovery.',color:'#00c4a0'},
+                {step:'03',icon:'📅',title:'Schedule & Confirm',desc:'Move qualified patients toward booking, confirmations and rescheduling while routing exceptions to the right human.',color:'#00e676'},
+                {step:'04',icon:'♻️',title:'Retain & Reactivate',desc:'Recall and reactivation workflows help the practice stay connected with patients who need another touchpoint.',color:'#f59e0b',badge:'↗ Practice Operations'},
+              ].map((s,i)=>(
+                <div key={i} ref={sR[i].ref} onMouseMove={sR[i].onMouseMove} onMouseLeave={sR[i].onMouseLeave} className="c3d" style={{marginTop:14}}>
+                  <div className="sbdg" style={{color:s.color,border:`1px solid ${s.color}44`,boxShadow:`0 3px 10px ${s.color}33`}}>STEP {s.step}</div>
+                  <div className="cico">{s.icon}</div>
+                  <div className="ctit">{s.title}</div>
+                  <p className="cdsc">{s.desc}</p>
+                  {s.badge&&<div className="mbdg" style={{color:'#00e676',background:'rgba(0,230,118,0.08)',border:'1px solid rgba(0,230,118,0.25)'}}>{s.badge}</div>}
+                  <div className="cgl" style={{background:`linear-gradient(90deg,transparent,${s.color},transparent)`}}/>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* BENEFITS */}
-      <section className="gstrip"><div style={{position:'absolute',inset:0,backgroundImage:'linear-gradient(rgba(0,196,160,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,196,160,0.03) 1px,transparent 1px)',backgroundSize:'28px 28px',pointerEvents:'none'}}/><div style={{maxWidth:860,margin:'0 auto',textAlign:'center',position:'relative',zIndex:1}}><div className="bdg bgreen">What Changes</div><h2 style={{fontWeight:900,fontSize:'clamp(19px,3.5vw,38px)',letterSpacing:'-0.03em',color:'#fff',marginBottom:14,lineHeight:1.15}}>Less repetitive work. <span style={{background:'linear-gradient(90deg,#00e676,#00c4a0)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>More control.</span></h2><p style={{fontSize:'clamp(13px,1.8vw,15.5px)',color:'rgba(200,220,255,0.65)',maxWidth:560,margin:'0 auto',lineHeight:1.7}}>DentaGrow is designed around practical workflow outcomes — not a collection of tools your team has to learn and manage.</p><div className="gicons">{[{icon:'⏱',label:'Save staff time',sub:'Automate repeatable work'},{icon:'📅',label:'Protect the schedule',sub:'Confirm and follow up'},{icon:'🔁',label:'Recover follow-up',sub:'Recall and reactivate'},{icon:'📊',label:'See what matters',sub:'Simple operating visibility'}].map(g=><div key={g.label} className="gi"><div className="giw">{g.icon}</div><div style={{fontWeight:700,fontSize:12.5,color:'#fff',textAlign:'center'}}>{g.label}</div><div style={{fontSize:11,color:'rgba(200,220,255,0.45)',textAlign:'center'}}>{g.sub}</div></div>)}</div></div></section>
+      {/* OFFER */}
+      <section id="offer" style={{padding:'80px 5%',position:'relative',overflow:'hidden',background:'linear-gradient(150deg,rgba(0,196,160,0.055),rgba(30,127,255,0.045),transparent)'}}>
+        <div style={{maxWidth:1100,margin:'0 auto',position:'relative',zIndex:1}}>
+          <div style={{textAlign:'center',marginBottom:44}}>
+            <div className="bdg bteal">More Than Lead Generation</div>
+            <h2 className="sh2">A <span className="gteal">Managed Dental Growth System</span>, Not Another Tool</h2>
+            <p className="ssub">If your practice needs more than one automation, DentaGrow connects the pieces instead of asking your team to manage another stack.</p>
+          </div>
+          <div className="tg">
+            {[
+              {icon:'🌐',title:'Website When You Need One',desc:'No suitable website? We can provide a focused patient-facing website or landing experience as part of the implementation.',color:'#1e7fff'},
+              {icon:'💬',title:'Chatbot + Patient Capture',desc:'Give prospective patients a simple way to ask questions and leave their details while your team is busy.',color:'#00c4a0'},
+              {icon:'📞',title:'Voice + Missed-Call Recovery',desc:'Use voice and messaging workflows to respond to routine inquiries and recover opportunities that would otherwise be missed.',color:'#00e676'},
+              {icon:'♻️',title:'Recall + Reactivation',desc:'Automate routine patient re-engagement so overdue follow-ups do not depend entirely on manual lists.',color:'#f59e0b'},
+              {icon:'📊',title:'Practice-Level Visibility',desc:'See inquiries, bookings, pending follow-ups and human attention in business language—not automation-tool jargon.',color:'#8b5cf6'},
+              {icon:'🧑‍⚕️',title:'Humans Stay in Control',desc:'Clinical questions, emergencies, complex billing or insurance issues and other exceptions can be routed to your team.',color:'#f43f5e'},
+            ].map((c,i)=>(
+              <div key={i} ref={wR[i].ref} onMouseMove={wR[i].onMouseMove} onMouseLeave={wR[i].onMouseLeave} className="c3d">
+                <div className="wibox" style={{background:`linear-gradient(135deg,${c.color}22,${c.color}08)`,border:`1px solid ${c.color}33`,boxShadow:`0 4px 14px ${c.color}22`}}>{c.icon}</div>
+                <div className="ctit">{c.title}</div>
+                <p className="cdsc">{c.desc}</p>
+                <div style={{position:'absolute',top:0,right:0,width:60,height:60,background:`radial-gradient(circle at top right,${c.color}18,transparent 70%)`,borderRadius:'0 20px 0 0'}}/>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* WHY US / FEATURES */}
-      <section id="why-us" style={{padding:'80px 5%',background:'rgba(255,255,255,0.015)',borderTop:'1px solid rgba(255,255,255,0.05)',position:'relative',overflow:'hidden'}}><div style={{position:'absolute',top:'-40%',right:'-10%',width:600,height:600,borderRadius:'50%',background:'rgba(0,196,160,0.04)',filter:'blur(80px)',pointerEvents:'none'}}/><div style={{maxWidth:1100,margin:'0 auto',position:'relative',zIndex:1}}><div style={{textAlign:'center',marginBottom:52}}><div className="bdg bgreen">Inside DentaGrow</div><h2 className="sh2">One operating layer. <span className="ggreen">Many connected workflows.</span></h2><p className="ssub">The exact integrations depend on the practice. The principle stays the same: one front-end experience, connected automation behind it.</p></div><div className="tg">{[{icon:'📞',title:'Missed-call recovery',desc:'Route missed calls into a structured callback or message workflow so opportunities do not simply disappear.',color:'#1e7fff'},{icon:'📅',title:'Scheduling workflows',desc:'Confirmations, reminders, rescheduling and open-slot follow-up can run automatically around your calendar.',color:'#00c4a0'},{icon:'🔁',title:'Recall & reactivation',desc:'Identify eligible patients who are due for follow-up or have gone quiet, then run the configured outreach sequence.',color:'#00e676'},{icon:'💬',title:'Patient communication',desc:'Use SMS, email and AI voice workflows for routine communication while routing complex cases to staff.',color:'#f59e0b'},{icon:'📊',title:'Practice visibility',desc:'See inquiries, appointments, follow-ups, exceptions and workflow status in one simple operating view.',color:'#a78bfa'},{icon:'🧩',title:'Connected tools',desc:'n8n can orchestrate your approved CRM, calendar, forms, AI, voice, email, SMS and other systems behind the scenes.',color:'#f43f5e'}].map((c,i)=><div key={i} ref={oR[i].ref} onMouseMove={oR[i].onMouseMove} onMouseLeave={oR[i].onMouseLeave} className="c3d"><div className="wibox" style={{background:`linear-gradient(135deg,${c.color}22,${c.color}08)`,border:`1px solid ${c.color}33`,boxShadow:`0 4px 14px ${c.color}22`}}>{c.icon}</div><div className="ctit">{c.title}</div><p className="cdsc">{c.desc}</p><div style={{position:'absolute',top:0,right:0,width:60,height:60,background:`radial-gradient(circle at top right,${c.color}18,transparent 70%)`,borderRadius:'0 20px 0 0'}}/></div>)}</div></div></section>
-
-      {/* RESULTS / PROOF */}
-      <section style={{padding:'80px 5%',position:'relative',overflow:'hidden',background:'rgba(255,255,255,0.015)',borderTop:'1px solid rgba(255,255,255,0.05)'}}><div style={{position:'absolute',top:'10%',left:'-5%',width:500,height:500,borderRadius:'50%',background:'rgba(30,127,255,0.04)',filter:'blur(70px)',pointerEvents:'none'}}/><div style={{maxWidth:1100,margin:'0 auto',position:'relative',zIndex:1}}><div style={{textAlign:'center',marginBottom:48}}><div className="bdg bteal">How We Measure</div><h2 className="sh2">No vanity dashboard. <span className="gteal">Track the workflow.</span></h2><p className="ssub">Your operating view should answer simple questions: what came in, what was handled, what got booked, and what still needs a human.</p></div><div className="tg">{[{result:'Capture',title:'INQUIRIES',desc:'What entered the practice workflow, from which channel, with the relevant context.',color:'#00c4a0'},{result:'Convert',title:'APPOINTMENTS',desc:'What was scheduled, confirmed, rescheduled or cancelled — and what still needs attention.',color:'#1e7fff'},{result:'Escalate',title:'HUMAN ATTENTION',desc:'Which patient or operational situations need a member of your team to step in.',color:'#f59e0b'}].map((x,i)=><div key={i} ref={mR[i].ref} onMouseMove={mR[i].onMouseMove} onMouseLeave={mR[i].onMouseLeave} className="c3d"><div className="rpill" style={{background:`${x.color}18`,border:`1px solid ${x.color}44`,color:x.color}}>{x.result}</div><div style={{fontWeight:900,fontSize:24,color:x.color,margin:'14px 0 8px',letterSpacing:'-0.02em'}}>{x.title}</div><p style={{fontSize:13.5,color:'rgba(200,220,255,0.82)',lineHeight:1.7,margin:0}}>{x.desc}</p><div className="cgl" style={{background:`linear-gradient(90deg,transparent,${x.color},transparent)`}}/></div>)}</div><p style={{fontSize:11.5,color:'rgba(200,220,255,0.3)',textAlign:'center',marginTop:20}}>These are product concepts, not customer results or performance claims.</p></div></section>
-
-      {/* GROWTH MODULE */}
-      <section className="ustrip"><div style={{position:'absolute',inset:0,backgroundImage:'radial-gradient(rgba(0,196,160,0.05) 1px,transparent 1px)',backgroundSize:'22px 22px',pointerEvents:'none'}}/><div style={{maxWidth:900,margin:'0 auto',textAlign:'center',position:'relative',zIndex:1}}><div className="bdg bteal">Growth When You Need It</div><h2 style={{fontWeight:900,fontSize:'clamp(17px,3.5vw,34px)',color:'#fff',letterSpacing:'-0.02em',marginBottom:12,lineHeight:1.2}}>Already busy? Keep the operations.<br/><span className="gteal">Need more patients? Add acquisition.</span></h2><p style={{fontSize:'clamp(12.5px,1.8vw,15px)',color:'rgba(200,220,255,0.65)',marginBottom:24,lineHeight:1.65,maxWidth:600,margin:'0 auto 24px'}}>DentaGrow does not require a clinic to need more leads. When growth is the goal, local patient acquisition can plug into the same workflow.</p><div className="tg" style={{textAlign:'left',marginBottom:26}}>{[{icon:'🎯',title:'Local Meta & Google',desc:'Campaigns can be configured around the practice location, services and relevant local service area.',color:'#1e7fff'},{icon:'🖥️',title:'Landing page when needed',desc:'Use the clinic website when it is ready. If not, provide a focused patient-facing landing experience for the campaign.',color:'#00c4a0'},{icon:'💬',title:'Lead capture + follow-up',desc:'New inquiries enter the same workflow instead of becoming another manual process for the front desk.',color:'#00e676'}].map((x,i)=><div key={i} ref={tR[i].ref} onMouseMove={tR[i].onMouseMove} onMouseLeave={tR[i].onMouseLeave} className="c3d"><div className="wibox" style={{background:`linear-gradient(135deg,${x.color}22,${x.color}08)`,border:`1px solid ${x.color}33`,boxShadow:`0 4px 14px ${x.color}22`}}>{x.icon}</div><div className="ctit">{x.title}</div><p className="cdsc">{x.desc}</p></div>)}</div><p style={{fontSize:11.5,color:'rgba(200,220,255,0.3)',maxWidth:650,margin:'0 auto'}}>Geographic targeting improves local relevance; it does not guarantee that every ad impression is the nearest person. Advertising spend and DentaGrow service fees are kept separate.</p></div></section>
-
-      {/* RESERVE / PAYMENT */}
-      <section id="reserve" style={{padding:'92px 5%',position:'relative',overflow:'hidden',background:'linear-gradient(145deg,rgba(0,196,160,0.035),rgba(30,127,255,0.04),rgba(4,13,26,0.96))',borderTop:'1px solid rgba(0,196,160,0.12)',borderBottom:'1px solid rgba(255,255,255,0.06)'}}>
-        <div style={{position:'absolute',top:'8%',left:'50%',transform:'translateX(-50%)',width:720,height:420,borderRadius:'50%',background:'radial-gradient(ellipse,rgba(0,196,160,0.08),transparent 68%)',filter:'blur(20px)',pointerEvents:'none'}}/>
-        <div style={{maxWidth:1120,margin:'0 auto',position:'relative',zIndex:2}}>
-          <div style={{textAlign:'center',maxWidth:760,margin:'0 auto 42px'}}>
-            <div className="bdg bgreen">Secure Your Growth Consultation</div>
-            <h2 className="sh2" style={{fontSize:'clamp(28px,4.6vw,52px)',marginBottom:14}}>A serious plan starts with a <span className="ggreen">serious conversation.</span></h2>
-            <p className="ssub" style={{maxWidth:660}}>Reserve a dedicated DentaGrow consultation for <span style={{color:'#fff',fontWeight:700}}>$199</span>. The deposit is refundable according to the consultation policy, and the session is built around your actual practice workflow — not a generic sales pitch.</p>
+      {/* INSURANCE + OPERATIONS */}
+      <section id="insurance" style={{padding:'84px 5%',position:'relative',overflow:'hidden',background:'linear-gradient(180deg,rgba(30,127,255,0.035),rgba(0,196,160,0.025))',borderTop:'1px solid rgba(255,255,255,0.05)'}}>
+        <div style={{position:'absolute',top:'-20%',left:'-8%',width:520,height:520,borderRadius:'50%',background:'rgba(30,127,255,0.045)',filter:'blur(90px)',pointerEvents:'none'}}/>
+        <div style={{maxWidth:1100,margin:'0 auto',position:'relative',zIndex:1}}>
+          <div style={{textAlign:'center',marginBottom:48}}>
+            <div className="bdg bblue">Insurance Intelligence</div>
+            <h2 className="sh2">Take the <span className="ggreen">Insurance Workload</span> Out of the Front Desk</h2>
+            <p className="ssub">DentaGrow can organize insurance intake, verification and exception workflows alongside the patient journey. Connected-system and payer availability determines what can be automated.</p>
           </div>
 
-          <div className="pay-grid">
-            <div className="pay-story">
-              <div className="pay-visual" aria-hidden="true">
-                <div className="pay-ring ring-a"/><div className="pay-ring ring-b"/>
-                <div className="pay-orb"><div className="pay-orb-inner">DG</div></div>
-                <div className="pay-float pf-a"><span>✓</span> Secure flow</div>
-                <div className="pay-float pf-b"><span>↗</span> Practice-first</div>
-                <div className="pay-float pf-c"><span>↺</span> Refundable deposit</div>
+          <div className="tg">
+            {[
+              {icon:'🪪',title:'Insurance Intake',desc:'Collect insurance details and card information through a structured patient workflow so staff are not repeatedly chasing missing basics.',color:'#1e7fff'},
+              {icon:'🔎',title:'Eligibility + Benefits',desc:'Where supported by the connected practice or payer workflow, route eligibility and benefit checks into a trackable verification process.',color:'#00c4a0'},
+              {icon:'📋',title:'Coverage Summary',desc:'Keep verification results, timestamps and missing-information status organized for the team instead of scattered across messages and notes.',color:'#00e676'},
+              {icon:'⚠️',title:'Exception Queue',desc:'Flag cases that need human review—conflicting information, unavailable payer data, unusual coverage questions or incomplete verification.',color:'#f59e0b'},
+              {icon:'💰',title:'Estimate Workflow',desc:'Support pre-treatment estimate and financial-discussion workflows where the practice systems and payer process allow it. Coverage is never treated as a guarantee.',color:'#a78bfa'},
+              {icon:'📨',title:'Claims Follow-Up',desc:'Organize claim-status and insurance follow-up tasks so outstanding items become visible instead of relying on manual memory.',color:'#f43f5e'},
+            ].map((c,i)=>(
+              <div key={i} className="c3d" style={{minHeight:190}}>
+                <div className="wibox" style={{background:`linear-gradient(135deg,${c.color}22,${c.color}08)`,border:`1px solid ${c.color}33`,boxShadow:`0 4px 14px ${c.color}22`}}>{c.icon}</div>
+                <div className="ctit">{c.title}</div>
+                <p className="cdsc">{c.desc}</p>
+                <div style={{position:'absolute',top:0,right:0,width:60,height:60,background:`radial-gradient(circle at top right,${c.color}18,transparent 70%)`,borderRadius:'0 20px 0 0'}}/>
               </div>
-              <div style={{padding:'0 4px'}}>
-                <div className="pay-kicker">WHAT YOU ARE RESERVING</div>
-                <h3 style={{fontWeight:800,fontSize:24,color:'#fff',letterSpacing:'-0.03em',margin:'8px 0 12px'}}>Your practice, mapped before we talk solutions.</h3>
-                <p style={{fontSize:13.5,color:'rgba(200,220,255,0.56)',lineHeight:1.75,marginBottom:18}}>We use the consultation to understand where repetitive work, missed opportunities or disconnected systems are costing your team time. If DentaGrow is not a fit, we tell you that too.</p>
-                <div className="pay-checks">
-                  {['Workflow review tailored to your practice','Clear automation opportunities — no tool overload','Human-in-the-loop plan for sensitive work','Practical next steps you can actually implement'].map((x,i)=><div key={i}><span>✓</span>{x}</div>)}
+            ))}
+          </div>
+
+          <div style={{marginTop:24,padding:'16px 18px',borderRadius:14,background:'rgba(245,158,11,0.055)',border:'1px solid rgba(245,158,11,0.16)',display:'flex',gap:12,alignItems:'flex-start'}}>
+            <div style={{fontSize:18}}>🛡</div>
+            <div>
+              <div style={{fontSize:12.5,fontWeight:800,color:'#fff',marginBottom:4}}>Important: verification is not a coverage guarantee.</div>
+              <div style={{fontSize:11.5,color:'rgba(200,220,255,0.48)',lineHeight:1.6}}>Insurance eligibility and benefits can change, payer responses can be incomplete, and some workflows require staff review. DentaGrow is designed to surface that uncertainty instead of hiding it.</div>
+            </div>
+          </div>
+
+          <div className="insurance-two-col" style={{marginTop:30,display:'grid',gridTemplateColumns:'1fr 1fr',gap:14}}>
+            {[
+              {title:'What the clinic sees',items:['Verification status','Benefits / coverage information when returned','Missing information','Exceptions needing staff attention','Verification history']},
+              {title:'What stays human',items:['Clinical decisions','Final treatment recommendations','Complex insurance interpretation','Patient disputes and complaints','Exceptions requiring professional judgment']},
+            ].map((box,i)=>(
+              <div key={i} style={{background:'rgba(8,20,40,0.62)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:18,padding:'22px 20px'}}>
+                <div style={{fontSize:12,fontWeight:800,color:i===0?'#00c4a0':'#f59e0b',letterSpacing:'.06em',textTransform:'uppercase',marginBottom:13}}>{box.title}</div>
+                <div style={{display:'grid',gap:8}}>
+                  {box.items.map(item=>(
+                    <div key={item} style={{display:'flex',gap:9,alignItems:'flex-start',fontSize:12,color:'rgba(220,230,245,0.58)'}}>
+                      <span style={{color:i===0?'#00c4a0':'#f59e0b',fontWeight:900}}>✓</span>{item}
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            <div className="pay-card" onMouseEnter={e=>(e.currentTarget.style.transform='perspective(1000px) rotateY(0deg) translateY(-3px)')} onMouseLeave={e=>(e.currentTarget.style.transform='perspective(1000px) rotateY(-2deg) translateY(0)')}>
-              <div className="pay-card-top"><div><span className="secure-dot"/> Secure payment</div><span className="skydo-chip">SKYDO</span></div>
-              <div style={{marginTop:26}}><div className="pay-old">${ORIGINAL_AMOUNT} <span>Consultation Value</span></div><div className="pay-price"><span className="currency">$</span>{PAYMENT_AMOUNT}<span className="usd">USD</span></div><div className="pay-label">Refundable consultation deposit</div></div>
-              <div className="pay-divider"/>
-              <div className="pay-includes">
-                <div><span>01</span><b>Dedicated consultation</b><small>Practice-specific discussion</small></div>
-                <div><span>02</span><b>Workflow assessment</b><small>Find high-value automation points</small></div>
-                <div><span>03</span><b>Next-step roadmap</b><small>Clear fit / no-fit decision</small></div>
+      {/* INCLUDED */}
+      <section id="included" style={{padding:'82px 5%',position:'relative',overflow:'hidden'}}>
+        <div style={{maxWidth:1100,margin:'0 auto',position:'relative',zIndex:1}}>
+          <div style={{textAlign:'center',marginBottom:48}}>
+            <div className="bdg bgreen">Included With Implementation</div>
+            <h2 className="sh2">More Than a <span className="gteal">Lead Funnel</span></h2>
+            <p className="ssub">The goal is a connected patient-journey system—not a collection of disconnected automations. Availability depends on the practice's existing software, access and workflow.</p>
+          </div>
+
+          <div className="fg">
+            {[
+              {icon:'🌐',title:'Website When Needed',desc:'A focused patient-facing website or landing experience can be included when the practice needs a better digital entry point.',color:'#1e7fff'},
+              {icon:'💬',title:'AI Chat + Patient Capture',desc:'Capture inquiries, answer routine questions and route appointment requests without making patients wait for a reply.',color:'#00c4a0'},
+              {icon:'📞',title:'Voice + Missed-Call Recovery',desc:'Create a response path for missed calls and voice workflows, with human escalation for situations automation should not handle.',color:'#00e676'},
+              {icon:'📅',title:'Scheduling + Confirmation',desc:'Support appointment requests, confirmations, reminders, rescheduling and open-slot recovery around the practice calendar.',color:'#f59e0b'},
+              {icon:'♻️',title:'Recall + Reactivation',desc:'Bring overdue and previously inactive patients back into an organized follow-up workflow.',color:'#a78bfa'},
+              {icon:'🛡',title:'Insurance Workflow Layer',desc:'Organize insurance intake, verification status, exceptions and follow-up where payer and software connectivity supports it.',color:'#f43f5e'},
+              {icon:'📊',title:'Practice Intelligence',desc:'Give the team a simple view of inquiries, appointments, pending work, insurance exceptions and human attention needed.',color:'#38bdf8'},
+              {icon:'👥',title:'Human Escalation',desc:'Routine work can be automated; clinical questions, complex cases, complaints and exceptions stay with qualified staff.',color:'#fb7185'},
+            ].map((c,i)=>(
+              <div key={i} className="c3d" style={{minHeight:190}}>
+                <div className="wibox" style={{background:`linear-gradient(135deg,${c.color}22,${c.color}08)`,border:`1px solid ${c.color}33`,boxShadow:`0 4px 14px ${c.color}22`}}>{c.icon}</div>
+                <div className="ctit">{c.title}</div>
+                <p className="cdsc">{c.desc}</p>
+                <div style={{position:'absolute',top:0,right:0,width:60,height:60,background:`radial-gradient(circle at top right,${c.color}18,transparent 70%)`,borderRadius:'0 20px 0 0'}}/>
               </div>
-              {SKYDO_PAYMENT_URL ? <a href={SKYDO_PAYMENT_URL} target="_blank" rel="noopener noreferrer" className="pay-btn"><span>🔒</span>Continue to Secure Payment <span>→</span></a> : <div className="pay-btn pay-disabled"><span>🔒</span>Payment link being configured</div>}
-              <p className="pay-safe"><span>🛡</span> You leave DentaGrow for Skydo to complete payment. We do not collect or store your bank credentials on this website.</p>
-              <div className="pay-trust"><span>✓ External payment provider</span><span>✓ No card/bank data stored here</span><span>✓ Refundable deposit policy shown before payment</span></div>
-              <div className="pay-policy">By continuing, you are reserving a consultation deposit. Refunds are handled according to the consultation/refund policy and the payment provider's applicable process.</div>
-            </div>
+            ))}
           </div>
 
-          <div className="after-pay">
-            <div><span className="ap-icon">1</span><div><b>Pay the refundable deposit</b><small>Complete the $199 payment securely through Skydo.</small></div></div>
-            <div><span className="ap-icon">2</span><div><b>Book your consultation</b><small>After payment verification, receive your private booking instructions.</small></div></div>
-            <div><span className="ap-icon">3</span><div><b>Leave with a clear next step</b><small>Fit, priorities and implementation path — without pressure.</small></div></div>
+          <div style={{marginTop:30,textAlign:'center',fontSize:11,color:'rgba(200,220,255,0.35)'}}>
+            <strong style={{color:'rgba(255,255,255,0.5)'}}>Bonus setup items:</strong> workflow mapping, launch configuration, patient-communication templates, reporting setup and implementation guidance where applicable.
           </div>
-          <div style={{textAlign:'center',marginTop:22}}><p style={{fontSize:11.5,color:'rgba(200,220,255,0.42)',lineHeight:1.6,margin:0}}>Already paid? Keep your Skydo confirmation. We verify payment before sending your private consultation-booking instructions.</p></div>
+        </div>
+      </section>
+
+      {/* WHY US */}
+      <section id="why-us" style={{padding:'80px 5%',background:'rgba(255,255,255,0.015)',borderTop:'1px solid rgba(255,255,255,0.05)',position:'relative',overflow:'hidden'}}>
+        <div style={{position:'absolute',top:'-40%',right:'-10%',width:600,height:600,borderRadius:'50%',background:'rgba(0,196,160,0.04)',filter:'blur(80px)',pointerEvents:'none'}}/>
+        <div style={{maxWidth:1100,margin:'0 auto',position:'relative',zIndex:1}}>
+          <div style={{textAlign:'center',marginBottom:52}}>
+            <div className="bdg bgreen">Why DentaGrow</div>
+            <h2 className="sh2">Built Around <span className="ggreen">Practice Workflows</span></h2>
+            <p className="ssub">The goal is not to replace every human task. It is to remove repetitive work and make the patient journey easier to manage.</p>
+          </div>
+          <div className="tg">
+            {[
+              {icon:'🧩',title:'One Managed Layer',desc:'DentaGrow connects acquisition, communication, scheduling, insurance workflows and retention around the practice instead of leaving your team with disconnected tools.',color:'#1e7fff'},
+              {icon:'🌐',title:'Website When Needed',desc:'If the practice lacks a suitable website, a focused patient-facing web experience can be included in the implementation.',color:'#00c4a0'},
+              {icon:'🛡',title:'Insurance Workflow Support',desc:'Bring insurance intake, verification status, exceptions and follow-up into the same operational layer where the connected systems support it.',color:'#00e676'},
+              {icon:'💬',title:'Chat + Voice Options',desc:'Add chatbot, messaging or voice workflows where they solve a real patient-communication problem.',color:'#f59e0b'},
+              {icon:'🧑‍⚕️',title:'Human Escalation',desc:'DentaGrow automates routine work while keeping clinical judgment, complex cases and exceptions with qualified people.',color:'#00c4a0'},
+              {icon:'📊',title:'Business Reporting',desc:'Track inquiries, appointments, follow-ups and attention needed without exposing the underlying automation stack to the clinic.',color:'#f43f5e'},
+            ].map((c,i)=>(
+              <div key={i} ref={wR[i].ref} onMouseMove={wR[i].onMouseMove} onMouseLeave={wR[i].onMouseLeave} className="c3d">
+                <div className="wibox" style={{background:`linear-gradient(135deg,${c.color}22,${c.color}08)`,border:`1px solid ${c.color}33`,boxShadow:`0 4px 14px ${c.color}22`}}>{c.icon}</div>
+                <div className="ctit">{c.title}</div>
+                <p className="cdsc">{c.desc}</p>
+                <div style={{position:'absolute',top:0,right:0,width:60,height:60,background:`radial-gradient(circle at top right,${c.color}18,transparent 70%)`,borderRadius:'0 20px 0 0'}}/>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* MEASUREMENT */}
+      <section id="results" style={{padding:'80px 5%',position:'relative',overflow:'hidden'}}>
+        <div style={{position:'absolute',top:'10%',left:'-5%',width:500,height:500,borderRadius:'50%',background:'rgba(30,127,255,0.04)',filter:'blur(70px)',pointerEvents:'none'}}/>
+        <div style={{maxWidth:1000,margin:'0 auto',position:'relative',zIndex:1}}>
+          <div style={{textAlign:'center',marginBottom:48}}>
+            <div className="bdg bteal">Measure What Matters</div>
+            <h2 className="sh2">No Manufactured <span className="gteal">Case Studies</span></h2>
+            <p className="ssub">Your dashboard should show your practice's actual activity. DentaGrow will measure results after implementation rather than inventing proof before it exists.</p>
+          </div>
+          <div className="tg">
+            {[
+              {icon:'📥',title:'New Patient Inquiries',desc:'Track where inquiries came from and what happened after the first contact.',color:'#00c4a0'},
+              {icon:'📅',title:'Appointments',desc:'Separate booked appointments from raw leads so marketing activity can be connected to the schedule.',color:'#1e7fff'},
+              {icon:'🕐',title:'Pending Follow-Ups',desc:'See routine follow-ups waiting for automation and exceptions that need human attention.',color:'#00e676'},
+              {icon:'🛡',title:'Insurance Exceptions',desc:'Make incomplete or unresolved insurance work visible instead of letting it disappear in the front-desk workload.',color:'#f59e0b'},
+              {icon:'♻️',title:'Recall + Reactivation',desc:'Measure how many patients are due, contacted, reactivated or still waiting for follow-up.',color:'#a78bfa'},
+              {icon:'👤',title:'Human Attention',desc:'Give staff a clear queue of the cases that genuinely need a person to step in.',color:'#f43f5e'},
+            ].map((t,i)=>(
+              <div key={i} className="c3d">
+                <div className="wibox" style={{background:`${t.color}12`,border:`1px solid ${t.color}33`}}>{t.icon}</div>
+                <div className="ctit">{t.title}</div>
+                <p className="cdsc">{t.desc}</p>
+                <div className="cgl" style={{background:`linear-gradient(90deg,transparent,${t.color},transparent)`}}/>
+              </div>
+            ))}
+          </div>
+          <div style={{marginTop:20,textAlign:'center',fontSize:11.5,color:'rgba(200,220,255,0.36)'}}>Performance numbers shown on this website are not presented as guaranteed results.</div>
         </div>
       </section>
 
       {/* CONTACT */}
-      <section id="contact" style={{padding:'80px 5%',background:'linear-gradient(150deg,#040d1a,#041e30,#040d1a)',borderTop:'1px solid rgba(255,255,255,0.06)',position:'relative',overflow:'hidden'}}><div style={{position:'absolute',inset:0,background:'rgba(4,13,26,0.9)'}}/><div style={{position:'absolute',bottom:'-20%',right:'-5%',width:500,height:500,borderRadius:'50%',background:'rgba(0,196,160,0.05)',filter:'blur(70px)',pointerEvents:'none'}}/><div className="cg" style={{maxWidth:1060,margin:'0 auto',position:'relative',zIndex:2}}><div><div className="bdg bteal" style={{marginBottom:16}}>Practice Consultation</div><h2 className="sh2" style={{marginBottom:14}}>Let's map your<br/><span className="gteal">practice workflow.</span></h2><p style={{fontSize:14.5,color:'rgba(200,220,255,0.6)',fontWeight:300,lineHeight:1.75,marginBottom:26}}>Tell us where your practice spends the most manual time. We will use that starting point to shape the right automation plan — whether your priority is operations, patient retention, growth, or a combination.</p>{[{icon:'🔎',title:'Workflow-first assessment',desc:'Start with your real patient journey and staff workload.'},{icon:'🧩',title:'Tool-agnostic architecture',desc:'Use the tools that fit the practice instead of forcing one stack.'},{icon:'🧑‍⚕️',title:'Human control where it matters',desc:'Automation handles repeatable work; people handle judgement and exceptions.'}].map(item=><div key={item.title} style={{display:'flex',gap:12,marginBottom:15}}><div style={{width:38,height:38,borderRadius:10,background:'rgba(0,196,160,0.08)',border:'1px solid rgba(0,196,160,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:16,flexShrink:0}}>{item.icon}</div><div><div style={{fontWeight:600,fontSize:13.5,color:'#fff',marginBottom:2}}>{item.title}</div><div style={{fontSize:12.5,color:'rgba(200,220,255,0.5)'}}>{item.desc}</div></div></div>)}<div style={{marginTop:16,display:'flex',flexDirection:'column',gap:10}}><a href="#reserve" className="btn-cta" style={{fontSize:14.5}}><span className="ci">🔒</span>Reserve Your Consultation · $199<span className="arr">→</span></a><a href={`mailto:${EMAIL}`} style={{fontSize:12.5,color:'rgba(200,220,255,0.4)',textDecoration:'none'}} onMouseEnter={e=>(e.currentTarget.style.color='#00c4a0')} onMouseLeave={e=>(e.currentTarget.style.color='rgba(200,220,255,0.4)')}>✉ {EMAIL}</a></div></div><div className="fcard" onMouseEnter={e=>(e.currentTarget.style.transform='perspective(900px) rotateY(0deg)')} onMouseLeave={e=>(e.currentTarget.style.transform='perspective(900px) rotateY(-2deg)')}>{submitState==='done'?<div style={{textAlign:'center',padding:'30px 0'}}><div style={{fontSize:50,marginBottom:14}}>✅</div><h3 style={{fontWeight:800,fontSize:20,color:'#fff',marginBottom:8}}>Request Received</h3><p style={{fontSize:13.5,color:'rgba(200,220,255,0.6)',lineHeight:1.65,maxWidth:320,margin:'0 auto 18px'}}>Your practice details are saved. The next step is to reserve your $199 refundable consultation deposit. Payment is completed securely on Skydo.</p><a href="#reserve" className="btn-cta" style={{fontSize:14,marginBottom:12}}><span className="ci">🔒</span>Continue to $199 Secure Reservation<span className="arr">→</span></a><div><button onClick={()=>setSubmitState('idle')} style={{background:'none',color:'rgba(200,220,255,0.4)',border:'none',cursor:'pointer',fontSize:12.5,marginTop:4,textDecoration:'underline'}}>Edit / Submit Again</button></div></div>:<form onSubmit={handleSubmit}><h3 style={{fontWeight:800,fontSize:19,color:'#fff',marginBottom:5,letterSpacing:'-0.02em'}}>Tell Us About Your Practice</h3><p style={{fontSize:11.5,color:'rgba(200,220,255,0.4)',marginBottom:20}}>No long questionnaire. Just enough context to start the conversation.</p><div className="fr" style={{marginBottom:10}}><div><label className="fl">Your Name *</label><input required style={inp} placeholder="Dr. Jane Smith" value={form.name} onChange={e=>setForm(f=>({...f,name:e.target.value}))}/></div><div><label className="fl">Phone</label><input style={inp} placeholder="+1 (415) 555-0100" type="tel" value={form.phone} onChange={e=>setForm(f=>({...f,phone:e.target.value}))}/></div></div><div style={{marginBottom:10}}><label className="fl">Email Address *</label><input required type="email" style={inp} placeholder="jane@sfdentalclinic.com" value={form.email} onChange={e=>setForm(f=>({...f,email:e.target.value}))}/></div><div style={{marginBottom:10}}><label className="fl">Clinic Name *</label><input required style={inp} placeholder="Pacific Smiles Dental, SF" value={form.clinic_name} onChange={e=>setForm(f=>({...f,clinic_name:e.target.value}))}/></div><div style={{marginBottom:18}}><label className="fl">What would you most like to improve?</label><textarea style={{...inp,resize:'vertical',minHeight:92} as React.CSSProperties} placeholder="e.g. scheduling, missed calls, follow-up, recall, staff workload, patient growth..." value={form.message} onChange={e=>setForm(f=>({...f,message:e.target.value}))}/></div>{submitState==='error'&&<div style={{background:'rgba(244,63,94,0.1)',border:'1px solid rgba(244,63,94,0.3)',borderRadius:8,padding:'9px 13px',fontSize:12.5,color:'#f43f5e',marginBottom:12}}>Something went wrong. Please email us directly.</div>}<button type="submit" disabled={submitState==='loading'} className="subbtn" style={{opacity:submitState==='loading'?0.7:1,cursor:submitState==='loading'?'not-allowed':'pointer'}}>{submitState==='loading'?'Sending...':'Start the Conversation →'}</button><p style={{fontSize:10.5,color:'rgba(200,220,255,0.28)',textAlign:'center',marginTop:10}}>🔒 Submitted through the DentaGrow lead workflow.</p></form>}</div></div></section>
+      <section id="contact" style={{padding:'80px 5%',background:'linear-gradient(150deg,#040d1a,#041e30,#040d1a)',borderTop:'1px solid rgba(255,255,255,0.06)',position:'relative',overflow:'hidden'}}>
+        <div style={{position:'absolute',inset:0,background:'rgba(4,13,26,0.9)'}}/>
+        <div style={{position:'absolute',bottom:'-20%',right:'-5%',width:500,height:500,borderRadius:'50%',background:'rgba(0,196,160,0.05)',filter:'blur(70px)',pointerEvents:'none'}}/>
+        <div className="cg" style={{maxWidth:1060,margin:'0 auto',position:'relative',zIndex:2}}>
+          <div>
+            <div className="bdg bteal" style={{marginBottom:16}}>Start the Conversation</div>
+            <h2 className="sh2" style={{marginBottom:14}}>See Whether <span className="gteal">DentaGrow Fits</span></h2>
+            <p style={{fontSize:14.5,color:'rgba(200,220,255,0.6)',fontWeight:300,lineHeight:1.75,marginBottom:26}}>If your team is spending valuable time chasing calls, confirmations, follow-ups, recall patients or insurance details, tell us where the pressure is. We use your answers to understand what should be automated—and what should stay human.</p>
+            {[
+              {icon:'🌐',title:'No website? That is okay.',desc:'A patient-facing website or landing experience can be part of the implementation when needed.'},
+              {icon:'💬',title:'Need a chatbot?',desc:'We can add patient-facing chat where it helps capture and route inquiries.'},
+              {icon:'🧑‍⚕️',title:'Your team stays in control.',desc:'DentaGrow automates routine work and escalates exceptions instead of pretending every task should be handled by AI.'},
+            ].map((item,i)=>(
+              <div key={i} style={{display:'flex',gap:12,marginBottom:15}}>
+                <div style={{width:38,height:38,borderRadius:10,background:'rgba(0,196,160,0.08)',border:'1px solid rgba(0,196,160,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:16,flexShrink:0}}>{item.icon}</div>
+                <div><div style={{fontWeight:600,fontSize:13.5,color:'#fff',marginBottom:2}}>{item.title}</div><div style={{fontSize:12.5,color:'rgba(200,220,255,0.5)'}}>{item.desc}</div></div>
+              </div>
+            ))}
+            <div style={{marginTop:20,display:'flex',flexDirection:'column',gap:10}}>
+              <a href="#contact" className="btn-cta" style={{fontSize:14.5}}><span className="ci">✦</span>Start With Your Practice Details<span className="arr">→</span></a>
+              <p style={{fontSize:11.5,color:'rgba(200,220,255,0.32)',margin:0}}>Prefer to ask a question first? Email {EMAIL}.</p>
+            </div>
+          </div>
+
+          <div className="fcard" onMouseEnter={e=>(e.currentTarget.style.transform='perspective(900px) rotateY(0deg)')} onMouseLeave={e=>(e.currentTarget.style.transform='perspective(900px) rotateY(-2deg)')}>
+            {submitState==='done'?(
+              <div style={{textAlign:'center',padding:'30px 0'}}>
+                <div style={{fontSize:50,marginBottom:14,filter:'drop-shadow(0 4px 12px rgba(0,196,160,0.4))'}}>✅</div>
+                <h3 style={{fontWeight:800,fontSize:20,color:'#fff',marginBottom:8}}>You Took the First Step</h3>
+                <p style={{fontSize:13.5,color:'rgba(200,220,255,0.62)',lineHeight:1.7,maxWidth:330,margin:'0 auto 18px'}}>Your practice details are with the DentaGrow team. If the system looks like a fit, the next step is to reserve your consultation. If you are not ready to pay yet, your inquiry is still received.</p>
+                {PAYMENT_URL ? <a href={PAYMENT_URL} target="_blank" rel="noopener noreferrer" className="btn-cta" style={{fontSize:14,marginBottom:12}}><span className="ci">🔐</span>Reserve the Consultation · $199<span className="arr">→</span></a> : <div style={{fontSize:12,color:'rgba(200,220,255,0.4)',marginBottom:12}}>Payment link is being configured.</div>}
+                <div><button onClick={()=>setSubmitState('idle')} style={{background:'none',color:'rgba(200,220,255,0.4)',border:'none',cursor:'pointer',fontSize:12.5,marginTop:4,textDecoration:'underline'}}>Submit Another Request</button></div>
+              </div>
+            ):(
+              <form onSubmit={handleSubmit}>
+                <h3 style={{fontWeight:800,fontSize:19,color:'#fff',marginBottom:5,letterSpacing:'-0.02em'}}>Tell Us About Your Practice</h3>
+                <p style={{fontSize:11.5,color:'rgba(200,220,255,0.48)',lineHeight:1.55,marginBottom:7}}>If repetitive front-desk work is taking time away from your patients, tell us where it is happening.</p>
+                <p style={{fontSize:11.5,color:'rgba(200,220,255,0.34)',marginBottom:20}}>No sensitive clinical information is needed. There is no payment required to send your details.</p>
+                <div className="fr" style={{marginBottom:10}}>
+                  <div><label className="fl">Your Name *</label><input required style={inp} placeholder="Dr. Jane Smith" value={form.name} onChange={e=>setForm(f=>({...f,name:e.target.value}))}/></div>
+                  <div><label className="fl">Phone</label><input style={inp} placeholder="+1 (415) 555-0100" type="tel" value={form.phone} onChange={e=>setForm(f=>({...f,phone:e.target.value}))}/></div>
+                </div>
+                <div style={{marginBottom:10}}><label className="fl">Email Address *</label><input required type="email" style={inp} placeholder="jane@sfdentalclinic.com" value={form.email} onChange={e=>setForm(f=>({...f,email:e.target.value}))}/></div>
+                <div style={{marginBottom:10}}><label className="fl">Clinic Name *</label><input required style={inp} placeholder="Your Dental Practice" value={form.clinic_name} onChange={e=>setForm(f=>({...f,clinic_name:e.target.value}))}/></div>
+                <div style={{marginBottom:18}}><label className="fl">What would you like DentaGrow to improve?</label><textarea style={{...inp,resize:'vertical',minHeight:90} as React.CSSProperties} placeholder="Examples: missed calls, scheduling workload, new-patient growth, recall/reactivation, website, chatbot..." value={form.message} onChange={e=>setForm(f=>({...f,message:e.target.value}))}/></div>
+                {submitState==='error'&&<div style={{background:'rgba(244,63,94,0.1)',border:'1px solid rgba(244,63,94,0.3)',borderRadius:8,padding:'9px 13px',fontSize:12.5,color:'#f43f5e',marginBottom:12}}>Something went wrong. Please email us directly.</div>}
+                <button type="submit" disabled={submitState==='loading'} className="subbtn" style={{opacity:submitState==='loading'?0.7:1,cursor:submitState==='loading'?'not-allowed':'pointer'}}>{submitState==='loading'?'Sending Securely...':'See If DentaGrow Fits →'}</button>
+                <p style={{fontSize:10.5,color:'rgba(200,220,255,0.28)',textAlign:'center',marginTop:10}}>🔒 Your details are used to review your practice and determine the right next step. Payment comes later, only if you choose to reserve the consultation.</p>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* PAYMENT */}
+      <section id="reserve" style={{padding:'86px 5%',position:'relative',overflow:'hidden',background:'linear-gradient(135deg,rgba(0,196,160,0.09),rgba(30,127,255,0.08),rgba(4,13,26,0.98))',borderTop:'1px solid rgba(0,196,160,0.18)',borderBottom:'1px solid rgba(0,196,160,0.18)'}}>
+        <div className="orb orb1" style={{right:'-260px',top:'-300px'}}/>
+        <div style={{maxWidth:1080,margin:'0 auto',position:'relative',zIndex:2,display:'grid',gridTemplateColumns:'1.1fr .9fr',gap:46,alignItems:'center'}}>
+          <div>
+            <div className="bdg bteal">Secure Your Consultation</div>
+            <h2 className="sh2">Start With a <span className="gteal">$199 Refundable Deposit</span></h2>
+            <p style={{fontSize:15,color:'rgba(200,220,255,0.68)',lineHeight:1.75,maxWidth:580}}>The consultation is where we review your practice, identify operational and growth bottlenecks, and determine whether DentaGrow is a fit. The deposit is <strong style={{color:'#fff'}}>refundable under the consultation policy</strong>.</p>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,marginTop:24}}>
+              {[
+                {icon:'🔐',title:'Hosted by Skydo',desc:'Payment is completed on Skydo—not by entering bank details into this website.'},
+                {icon:'💳',title:'$399 → $199',desc:'The consultation offer is presented at $199 for the current launch offer.'},
+                {icon:'🧭',title:'Clear Next Step',desc:'After payment, your consultation is the next stage of the DentaGrow process.'},
+                {icon:'🛡',title:'No Clinical Automation',desc:'Clinical judgment and patient-care decisions remain with qualified humans.'},
+              ].map((item,i)=>(
+                <div key={i} style={{display:'flex',gap:10,background:'rgba(255,255,255,0.04)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:14,padding:14}}>
+                  <div style={{fontSize:19}}>{item.icon}</div>
+                  <div><div style={{fontWeight:700,fontSize:12.5,color:'#fff'}}>{item.title}</div><div style={{fontSize:11,color:'rgba(200,220,255,0.46)',lineHeight:1.5,marginTop:3}}>{item.desc}</div></div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="fcard" style={{transform:'perspective(900px) rotateY(-3deg)',textAlign:'center',position:'relative'}}>
+            <div style={{fontSize:12,fontWeight:700,color:'#00c4a0',letterSpacing:'.12em',textTransform:'uppercase'}}>DentaGrow Consultation</div>
+            <div style={{marginTop:14,display:'flex',justifyContent:'center',alignItems:'baseline',gap:10}}><span style={{fontSize:24,color:'rgba(255,255,255,0.3)',textDecoration:'line-through'}}>$399</span><span style={{fontSize:52,fontWeight:900,color:'#fff',letterSpacing:'-.05em'}}>$199</span><span style={{fontSize:12,color:'rgba(200,220,255,0.45)'}}>USD</span></div>
+            <div style={{fontSize:13,fontWeight:700,color:'#00e676',marginTop:2}}>Refundable consultation deposit</div>
+            {PAYMENT_URL ? (
+              <a href={PAYMENT_URL} target="_blank" rel="noopener noreferrer" className="btn-cta" style={{width:'100%',justifyContent:'center',marginTop:22}}><span className="ci">🔐</span>Pay Securely with Skydo<span className="arr">→</span></a>
+            ) : (
+              <div style={{marginTop:22,padding:'13px 14px',borderRadius:11,background:'rgba(245,158,11,0.08)',border:'1px solid rgba(245,158,11,0.2)',fontSize:12,color:'rgba(255,255,255,0.62)'}}>Secure payment link is being configured. Please use the consultation form below for now.</div>
+            )}
+            <div style={{display:'flex',justifyContent:'center',gap:12,flexWrap:'wrap',marginTop:16,fontSize:10.5,color:'rgba(200,220,255,0.34)'}}><span>🔒 Secure hosted payment</span><span>•</span><span>💳 USD</span><span>•</span><span>🛡 Bank details stay off-site</span></div>
+            <p style={{fontSize:10.5,color:'rgba(200,220,255,0.27)',lineHeight:1.55,margin:'14px auto 0',maxWidth:320}}>Refunds are subject to the consultation/refund policy and payment-provider processing rules. We do not promise instant or automatic refunds unless the applicable payment process supports them.</p>
+          </div>
+        </div>
+      </section>
 
       {/* FAQ */}
-      <section style={{padding:'80px 5%',borderTop:'1px solid rgba(255,255,255,0.05)',position:'relative',overflow:'hidden'}}><div style={{position:'absolute',bottom:'-30%',right:'-10%',width:600,height:600,borderRadius:'50%',background:'rgba(30,127,255,0.04)',filter:'blur(80px)',pointerEvents:'none'}}/><div style={{maxWidth:780,margin:'0 auto',position:'relative',zIndex:1}}><div style={{textAlign:'center',marginBottom:44}}><h2 className="sh2">Frequently Asked Questions</h2><p className="ssub">Simple answers before you decide whether DentaGrow fits your practice.</p></div><div style={{display:'flex',flexDirection:'column',gap:9}}>{[{q:'Do I need more patients for DentaGrow to be useful?',a:'No. If your practice already has enough patient demand, DentaGrow can start with operations: scheduling workflows, reminders, follow-up, recall, reactivation, communication and reporting. Acquisition can be added only when it makes sense.'},{q:'What happens if my clinic already has a receptionist?',a:'DentaGrow is designed to reduce repetitive workload, not blindly remove the human role. Staff can focus on exceptions, patients in the office and situations that require judgement while automation handles repeatable workflows.'},{q:'What if I do not have a good website or chatbot?',a:'That is not a blocker. When needed, DentaGrow can provide a patient-facing landing page and lead-capture experience as part of the setup so inquiries have a clear place to go.'},{q:'Can DentaGrow bring new patients too?',a:'Yes. When growth is needed, we can add an acquisition layer such as Meta or Google campaigns targeted to the practice’s relevant local service area. Advertising spend and DentaGrow service fees are kept separate.'},{q:'Does DentaGrow replace the doctor?',a:'No. Clinical judgement, diagnosis, treatment decisions and other professional responsibilities stay with the appropriate clinic professionals. DentaGrow focuses on operational and communication workflows.'},{q:'What tools are used behind the scenes?',a:'The exact stack depends on the practice. n8n can orchestrate approved tools such as scheduling, CRM/data stores, email, SMS, AI services, voice agents and reporting. The clinic should not have to manage each tool separately.'},{q:'Can everything be automated?',a:'Not everything should be. The system should automate repeatable work and escalate exceptions. Complex patient issues, sensitive disputes and clinical matters should remain with humans.'},{q:'Why is there a $199 consultation deposit?',a:'The deposit reserves a dedicated consultation and helps keep the conversation focused on practices that are seriously evaluating workflow improvement. It is presented as refundable according to the consultation policy.'},{q:'Is the payment handled by DentaGrow?',a:'The website does not collect or store your bank credentials. The payment button takes you to Skydo to complete the transaction. We do not mark a consultation as paid merely because a button was clicked; payment is verified before booking instructions are released.'},{q:'What happens after I pay?',a:'Complete the $199 payment through Skydo. Keep the payment confirmation; we verify the payment before sending the consultation-booking instructions. The consultation then maps priorities, automation opportunities and the appropriate next step.'},{q:'How does the refund work?',a:'The $199 amount is a refundable consultation deposit subject to the stated consultation/refund policy. Payment-provider processing and settlement rules may affect how a refund or chargeback is handled.'},{q:'How do we get started?',a:'Reserve the consultation, complete the $199 payment through Skydo, keep your payment confirmation, and receive the consultation-booking instructions after verification. We then map the practice workflow, identify the highest-value manual tasks, and decide which automations and integrations belong in the initial setup.'}].map((item,i)=><div key={i} className={`fi ${faqOpen===i?'fo':''}`}><button onClick={()=>setFaqOpen(faqOpen===i?null:i)} className="fb"><span style={{fontWeight:600,fontSize:14.5,color:'#f0f6ff',lineHeight:1.5,textAlign:'left'}}>{item.q}</span><span className={`fic ${faqOpen===i?'fio':''}`}>+</span></button>{faqOpen===i&&<div style={{padding:'0 18px 16px'}}><p style={{fontSize:13.5,color:'rgba(200,220,255,0.62)',lineHeight:1.75,margin:0}}>{item.a}</p></div>}</div>)}</div></div></section>
+      <section style={{padding:'80px 5%',borderTop:'1px solid rgba(255,255,255,0.05)',position:'relative',overflow:'hidden'}}>
+        <div style={{position:'absolute',bottom:'-30%',right:'-10%',width:600,height:600,borderRadius:'50%',background:'rgba(30,127,255,0.04)',filter:'blur(80px)',pointerEvents:'none'}}/>
+        <div style={{maxWidth:780,margin:'0 auto',position:'relative',zIndex:1}}>
+          <div style={{textAlign:'center',marginBottom:44}}>
+            <h2 className="sh2">Frequently Asked Questions</h2>
+            <p className="ssub">Everything you need to know before booking your audit.</p>
+          </div>
+          <div style={{display:'flex',flexDirection:'column',gap:9}}>
+            {[
+              {q:'What is the $199 payment?',a:'It is a refundable consultation deposit for a DentaGrow Growth & Practice Automation Consultation. The consultation is used to review your practice, identify bottlenecks and determine whether DentaGrow is a fit. Refunds remain subject to the applicable consultation/refund policy.'},
+              {q:'Is payment handled securely?',a:'Yes. The DentaGrow website does not ask you to enter bank credentials. The payment CTA opens the hosted Skydo payment page. Payment-provider terms and processing rules apply.'},
+              {q:'Do I need a website already?',a:'No. If your practice does not have a suitable website or patient-facing landing experience, a DentaGrow website experience can be included in the implementation when appropriate.'},
+              {q:'Can DentaGrow add a chatbot?',a:'Yes. A website chatbot can be included when it solves a real patient-capture or communication need for the practice.'},
+              {q:'Can DentaGrow handle dental insurance workflows?',a:'It can support insurance intake, verification status, benefits information and exception workflows where the practice software and payer connectivity support them. Insurance responses are not treated as guaranteed coverage, and exceptions can be routed to staff for review.'},
+              {q:'Does DentaGrow replace my front desk?',a:'No. DentaGrow is designed to automate repetitive communication and workflow tasks while keeping your team in control of clinical, complex or exception-based work.'},
+              {q:'What happens after I pay?',a:'The consultation is the next step. We review the practice, discuss the current systems and workflow, and determine what should be automated, what should remain human and what implementation makes commercial sense.'},
+              {q:'Will you guarantee a specific number of new patients?',a:'No fixed patient count is promised on this website. Results depend on the practice, market, offer, budget, patient demand, follow-up and operational execution. DentaGrow measures actual performance after implementation.'},
+              {q:'What if I already have enough patients?',a:'Acquisition is optional. DentaGrow can focus on operational workflows such as scheduling support, missed-call recovery, reminders, recall, reactivation, patient communication and reporting.'},
+            ].map((item,i)=>(
+              <div key={i} className={`fi ${faqOpen===i?'fo':''}`}>
+                <button onClick={()=>setFaqOpen(faqOpen===i?null:i)} className="fb">
+                  <span style={{fontWeight:600,fontSize:14.5,color:'#f0f6ff',lineHeight:1.5,textAlign:'left'}}>{item.q}</span>
+                  <span className={`fic ${faqOpen===i?'fio':''}`}>+</span>
+                </button>
+                {faqOpen===i&&<div style={{padding:'0 18px 16px'}}><p style={{fontSize:13.5,color:'rgba(200,220,255,0.62)',lineHeight:1.75,margin:0}}>{item.a}</p></div>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* FOOTER */}
-      <footer style={{background:'rgba(4,8,18,0.99)',borderTop:'1px solid rgba(255,255,255,0.06)',padding:'46px 5% 24px',position:'relative',overflow:'hidden'}}><div style={{position:'absolute',top:0,left:0,right:0,height:1,background:'linear-gradient(90deg,transparent,rgba(0,196,160,0.45),transparent)'}}/><div style={{maxWidth:1100,margin:'0 auto'}}><div className="ftg"><div><div style={{display:'flex',alignItems:'center',gap:10,marginBottom:12}}><div style={{width:32,height:32,borderRadius:8,background:'linear-gradient(135deg,#00c4a0,#1e7fff)',display:'flex',alignItems:'center',justifyContent:'center',boxShadow:'0 4px 12px rgba(0,196,160,0.4)',transform:'perspective(140px) rotateY(-6deg)'}}><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#fff"/></svg></div><div><div style={{fontWeight:800,fontSize:13.5,color:'#fff',letterSpacing:'-0.02em'}}>AJ Intelligent Group</div><div style={{fontSize:8.5,color:'rgba(0,196,160,0.6)',fontWeight:600,letterSpacing:'0.04em'}}>DentaGrow · Dental Practice Systems</div></div></div><p style={{fontSize:12.5,color:'rgba(200,220,255,0.38)',lineHeight:1.75,maxWidth:280,marginBottom:14}}>DentaGrow helps dental practices automate repeatable operational work and add patient acquisition when growth is needed.</p><a href={`mailto:${EMAIL}`} style={{fontSize:11.5,color:'rgba(200,220,255,0.4)'}}>✉ {EMAIL}</a></div><div><div className="fth">System</div>{['How It Works','Operations','Patient Growth','Contact'].map(s=><a key={s} href={s==='Contact'?'#contact':s==='Patient Growth'?'#results':'#how-it-works'} className="ftl">{s}</a>)}</div><div><div className="fth">Principles</div>{['Automate repeatable work','Human escalation','Workflow-first','No fake claims'].map(s=><span key={s} className="ftl" style={{cursor:'default'}}>{s}</span>)}</div><div><div className="fth">Get Started</div><p style={{fontSize:12.5,color:'rgba(200,220,255,0.38)',lineHeight:1.7,marginBottom:14}}>Ready to see where automation can remove repetitive work from your practice?</p><a href="#reserve" className="btn-cta btn-sm"><span className="ci">🔒</span>Reserve · $199<span className="arr">→</span></a></div></div><div style={{borderTop:'1px solid rgba(255,255,255,0.06)',paddingTop:18,display:'flex',justifyContent:'space-between',flexWrap:'wrap',gap:8,marginTop:36}}><p style={{fontSize:11.5,color:'rgba(200,220,255,0.2)'}}>© 2026 AJ Intelligent Group. All rights reserved. · DentaGrow</p><p style={{fontSize:10.5,color:'rgba(200,220,255,0.13)',maxWidth:480,textAlign:'right'}}>Dental practice automation · scheduling workflows · patient communication · recall & reactivation · local patient acquisition</p></div></div></footer>
+      <footer style={{background:'rgba(4,8,18,0.99)',borderTop:'1px solid rgba(255,255,255,0.06)',padding:'46px 5% 24px',position:'relative',overflow:'hidden'}}>
+        <div style={{position:'absolute',top:0,left:0,right:0,height:1,background:'linear-gradient(90deg,transparent,rgba(0,196,160,0.45),transparent)'}}/>
+        <div style={{maxWidth:1100,margin:'0 auto'}}>
+          <div className="ftg">
+            <div>
+              <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:12}}>
+                <div style={{width:32,height:32,borderRadius:8,background:'linear-gradient(135deg,#00c4a0,#1e7fff)',display:'flex',alignItems:'center',justifyContent:'center',boxShadow:'0 4px 12px rgba(0,196,160,0.4)',transform:'perspective(140px) rotateY(-6deg)'}}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#fff"/></svg>
+                </div>
+                <div>
+                  <div style={{fontWeight:800,fontSize:13.5,color:'#fff',letterSpacing:'-0.02em'}}>AJ Intelligent Group</div>
+                  <div style={{fontSize:8.5,color:'rgba(0,196,160,0.6)',fontWeight:600,letterSpacing:'0.04em'}}>AI Growth Systems · San Francisco</div>
+                </div>
+              </div>
+              <p style={{fontSize:12.5,color:'rgba(200,220,255,0.38)',lineHeight:1.75,maxWidth:255,marginBottom:14}}>DentaGrow — dental practice operations + growth automation. Automate repetitive work while your team stays in control.</p>
+              <div style={{display:'flex',flexDirection:'column',gap:6}}>
+                <a href={`mailto:${EMAIL}`} style={{fontSize:11.5,color:'rgba(200,220,255,0.4)',textDecoration:'none',transition:'color 0.2s'}} onMouseEnter={e=>(e.currentTarget.style.color='#00c4a0')} onMouseLeave={e=>(e.currentTarget.style.color='rgba(200,220,255,0.4)')}>✉ {EMAIL}</a>
+                <span style={{fontSize:11.5,color:'rgba(200,220,255,0.28)'}}>📍 San Francisco, CA, USA</span>
+              </div>
+            </div>
+            <div>
+              <div className="fth">System</div>
+              {['How It Works','Website + Chatbot','Patient Follow-Up','Recall + Reactivation'].map(s=>(
+                <a key={s} href="#how-it-works" className="ftl">{s}</a>
+              ))}
+            </div>
+            <div>
+              <div className="fth">Company</div>
+              {['Results','Offer','Contact','FAQ'].map(s=>(
+                <a key={s} href="#" className="ftl">{s}</a>
+              ))}
+            </div>
+            <div>
+              <div className="fth">Get Started</div>
+              <p style={{fontSize:12.5,color:'rgba(200,220,255,0.38)',lineHeight:1.7,marginBottom:14}}>Ready to see whether DentaGrow fits your practice?</p>
+              <a href="#contact" className="btn-cta btn-sm"><span className="ci">✦</span>See If We Can Help<span className="arr">→</span></a>
+            </div>
+          </div>
+          <div style={{borderTop:'1px solid rgba(255,255,255,0.06)',paddingTop:18,display:'flex',justifyContent:'space-between',flexWrap:'wrap',gap:8,marginTop:36}}>
+            <p style={{fontSize:11.5,color:'rgba(200,220,255,0.2)'}}>© 2026 AJ Intelligent Group. All rights reserved. · DentaGrow AI Patient System</p>
+            <p style={{fontSize:10.5,color:'rgba(200,220,255,0.13)',maxWidth:480,textAlign:'right'}}>DentaGrow dental practice operations and growth automation</p>
+          </div>
+        </div>
+      </footer>
 
       <style>{`
         *{box-sizing:border-box;}
@@ -265,6 +631,7 @@ export default function App() {
 
         .bdg{display:inline-block;border-radius:100px;padding:5px 14px;margin-bottom:14px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;}
         .bteal{background:rgba(0,196,160,0.1);border:1px solid rgba(0,196,160,0.28);color:#00c4a0;}
+        .bblue{background:rgba(30,127,255,0.08);border-color:rgba(30,127,255,0.22);color:#7db4ff;}
         .bgreen{background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.24);color:#00e676;}
 
         .sh2{font-weight:800;font-size:clamp(22px,4vw,44px);letter-spacing:-0.03em;color:#fff;margin-bottom:12px;line-height:1.12;}
@@ -313,28 +680,6 @@ export default function App() {
         .wibox{width:48px;height:48px;border-radius:13px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;font-size:22px;}
         .rpill{display:inline-block;border-radius:100px;padding:3px 11px;font-size:10.5px;font-weight:700;}
         .cline{position:absolute;top:46px;left:12.5%;right:12.5%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,196,160,0.25),rgba(30,127,255,0.25),rgba(0,230,118,0.25),transparent);z-index:0;pointer-events:none;}
-        .pay-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center;}
-        .pay-story{position:relative;min-height:520px;padding:28px 18px 24px;border-radius:26px;background:linear-gradient(145deg,rgba(8,20,40,0.74),rgba(5,14,28,0.55));border:1px solid rgba(255,255,255,0.07);overflow:hidden;}
-        .pay-story:after{content:'';position:absolute;inset:auto 0 0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,196,160,.45),transparent);}
-        .pay-visual{height:250px;position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:22px;}
-        .pay-ring{position:absolute;border-radius:50%;border:1px solid rgba(0,196,160,.14);transform:rotateX(68deg) rotateZ(-8deg);}
-        .ring-a{width:290px;height:290px;box-shadow:0 0 70px rgba(0,196,160,.08);animation:spinRing 13s linear infinite;}
-        .ring-b{width:210px;height:210px;border-color:rgba(30,127,255,.16);transform:rotateX(68deg) rotateZ(25deg);animation:spinRing 9s linear infinite reverse;}
-        @keyframes spinRing{from{transform:rotateX(68deg) rotateZ(0deg)}to{transform:rotateX(68deg) rotateZ(360deg)}}
-        .pay-orb{width:116px;height:116px;border-radius:28px;background:linear-gradient(145deg,rgba(0,196,160,.9),rgba(30,127,255,.85));box-shadow:0 30px 70px rgba(0,196,160,.22),0 0 0 8px rgba(255,255,255,.03);transform:perspective(500px) rotateX(12deg) rotateY(-18deg);display:flex;align-items:center;justify-content:center;position:relative;z-index:2;animation:floatOrb 4.8s ease-in-out infinite;}
-        .pay-orb:before{content:'';position:absolute;inset:8px;border-radius:22px;border:1px solid rgba(255,255,255,.35);box-shadow:inset 0 0 30px rgba(255,255,255,.08);}
-        .pay-orb-inner{font-size:28px;font-weight:900;letter-spacing:-.08em;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,.22);}
-        @keyframes floatOrb{0%,100%{transform:perspective(500px) rotateX(12deg) rotateY(-18deg) translateY(0)}50%{transform:perspective(500px) rotateX(16deg) rotateY(-10deg) translateY(-10px)}}
-        .pay-float{position:absolute;z-index:3;padding:8px 11px;border-radius:12px;background:rgba(4,13,26,.88);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(12px);font-size:10.5px;font-weight:700;color:rgba(255,255,255,.72);box-shadow:0 12px 30px rgba(0,0,0,.28);animation:floatCard 5s ease-in-out infinite;}
-        .pay-float span{color:#00c4a0;margin-right:5px}.pf-a{top:30px;left:8%}.pf-b{top:80px;right:6%;animation-delay:-1.5s}.pf-c{bottom:18px;left:18%;animation-delay:-2.8s}.pay-float:nth-child(4){animation-delay:-2.8s}
-        @keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-        .pay-kicker{font-size:10px;font-weight:800;letter-spacing:.14em;color:#00c4a0;text-transform:uppercase;}
-        .pay-checks{display:grid;gap:9px}.pay-checks div{font-size:12.5px;color:rgba(220,235,255,.62);display:flex;gap:9px;align-items:flex-start;line-height:1.5}.pay-checks span{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(0,196,160,.1);border:1px solid rgba(0,196,160,.22);color:#00c4a0;font-size:10px;font-weight:800;}
-        .pay-card{border-radius:24px;padding:26px 24px 22px;background:linear-gradient(150deg,rgba(9,25,47,.98),rgba(4,13,26,.98));border:1px solid rgba(0,196,160,.22);box-shadow:0 25px 80px rgba(0,0,0,.4),0 0 70px rgba(0,196,160,.06);transform:perspective(1000px) rotateY(-2deg);transition:transform .25s ease,box-shadow .25s ease;position:relative;overflow:hidden;}
-        .pay-card:before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.05),transparent 30%,transparent 70%,rgba(0,196,160,.04));pointer-events:none;}.pay-card:after{content:'';position:absolute;top:-90px;right:-80px;width:220px;height:220px;border-radius:50%;background:rgba(0,196,160,.09);filter:blur(35px);pointer-events:none;}
-        .pay-card-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:rgba(220,235,255,.48);position:relative;z-index:2}.pay-card-top>div{display:flex;align-items:center;gap:7px}.secure-dot{width:7px;height:7px;border-radius:50%;background:#00e676;box-shadow:0 0 12px rgba(0,230,118,.8)}.skydo-chip{font-size:9px;letter-spacing:.12em;font-weight:900;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.11);padding:5px 8px;border-radius:7px;}
-        .pay-old{font-size:13px;color:rgba(200,220,255,.38);text-decoration:line-through;text-decoration-thickness:1px}.pay-old span{font-size:10px;text-decoration:none;display:inline-block;margin-left:6px;color:rgba(200,220,255,.25)}.pay-price{font-size:66px;line-height:1;font-weight:900;letter-spacing:-.06em;color:#fff;margin-top:4px;text-shadow:0 0 35px rgba(0,196,160,.14)}.pay-price .currency{font-size:28px;vertical-align:top;position:relative;top:9px;margin-right:2px;color:#00c4a0}.pay-price .usd{font-size:11px;letter-spacing:.12em;color:rgba(200,220,255,.36);font-weight:700;margin-left:7px}.pay-label{font-size:12px;color:#00c4a0;font-weight:700;margin-top:5px}.pay-divider{height:1px;background:rgba(255,255,255,.07);margin:22px 0 8px}.pay-includes{display:grid;gap:0}.pay-includes>div{display:grid;grid-template-columns:28px 1fr;column-gap:9px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}.pay-includes>div:last-child{border-bottom:0}.pay-includes span{grid-row:span 2;font-size:9px;color:#00c4a0;font-weight:800;padding-top:2px}.pay-includes b{font-size:12.5px;color:#f2f7ff}.pay-includes small{font-size:10.5px;color:rgba(200,220,255,.34);margin-top:2px}.pay-btn{margin-top:13px;display:flex;align-items:center;justify-content:space-between;gap:10px;text-decoration:none;border-radius:12px;padding:14px 15px;background:linear-gradient(100deg,#00c4a0,#00a98a);color:#03130f;font-size:13px;font-weight:900;box-shadow:0 12px 30px rgba(0,196,160,.18);transition:transform .2s ease,box-shadow .2s ease;position:relative;z-index:2}.pay-btn:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(0,196,160,.25)}.pay-disabled{opacity:.55;cursor:not-allowed;justify-content:center}.pay-safe{font-size:10.5px;color:rgba(200,220,255,.34);line-height:1.6;text-align:center;margin:10px 8px 0}.pay-safe span{color:#00c4a0}.pay-trust{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:13px}.pay-trust span{font-size:9.5px;color:rgba(220,235,255,.36);padding:4px 7px;border:1px solid rgba(255,255,255,.06);border-radius:100px}.pay-policy{font-size:9.5px;color:rgba(200,220,255,.24);line-height:1.55;text-align:center;margin-top:12px}.after-pay{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:28px;border:1px solid rgba(255,255,255,.06);border-radius:16px;background:rgba(255,255,255,.025);overflow:hidden}.after-pay>div{display:flex;gap:10px;padding:16px 14px;border-right:1px solid rgba(255,255,255,.06)}.after-pay>div:last-child{border-right:0}.ap-icon{width:24px;height:24px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(0,196,160,.1);border:1px solid rgba(0,196,160,.18);font-size:10px;color:#00c4a0;font-weight:900}.after-pay b{display:block;font-size:11.5px;color:#f0f6ff}.after-pay small{display:block;font-size:9.8px;line-height:1.45;color:rgba(200,220,255,.3);margin-top:3px}
-
 
         .gstrip{padding:56px 5%;background:linear-gradient(90deg,rgba(0,196,160,0.08),rgba(30,127,255,0.08),rgba(0,196,160,0.08));border-top:1px solid rgba(0,196,160,0.15);border-bottom:1px solid rgba(0,196,160,0.15);position:relative;overflow:hidden;}
         .gicons{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-top:26px;}
@@ -378,7 +723,6 @@ export default function App() {
         .ftl{display:block;font-size:12.5px;color:rgba(200,220,255,0.38);text-decoration:none;margin-bottom:8px;transition:color 0.2s;}
         .ftl:hover{color:#fff;}
 
-        @media(max-width:1024px){.pay-grid{grid-template-columns:1fr}.pay-story{min-height:auto}.pay-card{transform:none}.after-pay{grid-template-columns:1fr}.after-pay>div{border-right:0;border-bottom:1px solid rgba(255,255,255,0.06)}.after-pay>div:last-child{border-bottom:0}.pay-visual{max-width:520px;margin:0 auto 22px}}
         @media(max-width:1024px){
           .fg{grid-template-columns:1fr 1fr!important;gap:16px!important;}
           .tg{grid-template-columns:1fr 1fr!important;gap:16px!important;}
@@ -394,6 +738,8 @@ export default function App() {
           .st{border-right:none!important;border-bottom:1px solid rgba(255,255,255,0.06);}
         }
         @media(max-width:640px){
+          .insurance-two-col{grid-template-columns:1fr!important;}
+
           .fg{grid-template-columns:1fr!important;}
           .tg{grid-template-columns:1fr!important;}
           .ftg{grid-template-columns:1fr!important;}
