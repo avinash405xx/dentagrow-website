@@ -160,6 +160,54 @@ check(
 );
 
 /* ─────────────────────────────────────────────
+   META PIXEL
+───────────────────────────────────────────── */
+
+const META_PIXEL_ID = '1346550847551454';
+
+check(
+  'DentaGrow Meta Pixel ID is configured',
+  app.includes(META_PIXEL_ID),
+  `App must use Meta Pixel ID ${META_PIXEL_ID}`
+);
+
+check(
+  'Meta Pixel script is loaded',
+  /https:\/\/connect\.facebook\.net\/en_US\/fbevents\.js/.test(app),
+  'Meta Pixel must load the official Facebook Pixel script'
+);
+
+check(
+  'Meta PageView event exists',
+  /fbq\(\s*['"]track['"]\s*,\s*['"]PageView['"]\s*\)/.test(app),
+  'Meta Pixel must track PageView'
+);
+
+check(
+  'Meta Lead event exists',
+  /trackMetaEvent\(\s*['"]Lead['"]\s*\)/.test(app),
+  'Meta Lead event must be fired after successful lead capture'
+);
+
+check(
+  'Meta InitiateCheckout event exists',
+  /trackMetaEvent\(\s*['"]InitiateCheckout['"]/.test(app),
+  'Meta InitiateCheckout event must exist on the Skydo CTA'
+);
+
+check(
+  'Meta InitiateCheckout tracks $199 USD',
+  /InitiateCheckout[\s\S]{0,250}value:\s*PAYMENT_AMOUNT[\s\S]{0,100}currency:\s*['"]USD['"]/.test(app),
+  'InitiateCheckout should send the $199 payment amount in USD'
+);
+
+check(
+  'Meta Purchase event is not implemented yet',
+  !/trackMetaEvent\(\s*['"]Purchase['"]/.test(app),
+  'Purchase must wait for verified payment status'
+);
+
+/* ─────────────────────────────────────────────
    CTA / OLD FLOW
 ───────────────────────────────────────────── */
 

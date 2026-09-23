@@ -1,6 +1,36 @@
 import { useState, useEffect, useRef } from 'react';
 import { GOOGLE_SHEETS_WEB_APP_URL, SKYDO_PAYMENT_URL } from './lib/config';
 
+
+type MetaFbq = ((...args: unknown[]) => void) & {
+  queue?: unknown[][];
+  loaded?: boolean;
+  version?: string;
+};
+
+declare global {
+  interface Window {
+    fbq?: MetaFbq;
+  }
+}
+
+const META_PIXEL_ID = '1346550847551454';
+
+function trackMetaEvent(
+  eventName: string,
+  parameters?: Record<string, unknown>
+) {
+  if (typeof window === 'undefined' || typeof window.fbq !== 'function') {
+    return;
+  }
+
+  if (parameters) {
+    window.fbq('track', eventName, parameters);
+  } else {
+    window.fbq('track', eventName);
+  }
+}
+
 function useTilt(strength = 12) {
   const ref = useRef<HTMLDivElement>(null);
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -37,6 +67,29 @@ export default function App() {
     const onResize = () => { if (window.innerWidth > 768) setMenuOpen(false); };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (window.fbq || document.getElementById('meta-pixel-script')) return;
+
+    const fbq = ((...args: unknown[]) => {
+      fbq.queue?.push(args);
+    }) as MetaFbq;
+
+    fbq.queue = [];
+    fbq.loaded = true;
+    fbq.version = '2.0';
+    window.fbq = fbq;
+
+    const script = document.createElement('script');
+    script.id = 'meta-pixel-script';
+    script.async = true;
+    script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+    document.head.appendChild(script);
+
+    window.fbq('init', META_PIXEL_ID);
+    window.fbq('track', 'PageView');
   }, []);
 
   useEffect(() => {
@@ -79,6 +132,7 @@ export default function App() {
       });
 
       setSubmitState('done');
+      trackMetaEvent('Lead');
       setForm({ name: '', email: '', phone: '', clinic_name: '', message: '' });
     } catch {
       setSubmitState('error');
@@ -93,10 +147,9 @@ export default function App() {
 
   const EMAIL = 'avinashjayaintelligentgroup@gmail.com';
   const PAYMENT_URL = SKYDO_PAYMENT_URL;
- 
+  const PAYMENT_AMOUNT = 199;
   const s1=useTilt(9),s2=useTilt(9),s3=useTilt(9),s4=useTilt(9); const sR=[s1,s2,s3,s4];
   const w1=useTilt(7),w2=useTilt(7),w3=useTilt(7),w4=useTilt(7),w5=useTilt(7),w6=useTilt(7); const wR=[w1,w2,w3,w4,w5,w6];
-
 
   const NAV = ['How It Works','Insurance','Why Us','Results','Contact'];
 
@@ -472,7 +525,7 @@ export default function App() {
                 <div style={{fontSize:50,marginBottom:14,filter:'drop-shadow(0 4px 12px rgba(0,196,160,0.4))'}}>✅</div>
                 <h3 style={{fontWeight:800,fontSize:20,color:'#fff',marginBottom:8}}>You Took the First Step</h3>
                 <p style={{fontSize:13.5,color:'rgba(200,220,255,0.62)',lineHeight:1.7,maxWidth:330,margin:'0 auto 18px'}}>Your practice details are with the DentaGrow team. If the system looks like a fit, the next step is to reserve your consultation. If you are not ready to pay yet, your inquiry is still received.</p>
-                {PAYMENT_URL ? <a href={PAYMENT_URL} target="_blank" rel="noopener noreferrer" className="btn-cta" style={{fontSize:14,marginBottom:12}}><span className="ci">🔐</span>Reserve the Consultation · $199<span className="arr">→</span></a> : <div style={{fontSize:12,color:'rgba(200,220,255,0.4)',marginBottom:12}}>Payment link is being configured.</div>}
+                {PAYMENT_URL ? <a href={PAYMENT_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackMetaEvent('InitiateCheckout', { value: PAYMENT_AMOUNT, currency: 'USD' })} className="btn-cta" style={{fontSize:14,marginBottom:12}}><span className="ci">🔐</span>Reserve the Consultation · $199<span className="arr">→</span></a> : <div style={{fontSize:12,color:'rgba(200,220,255,0.4)',marginBottom:12}}>Payment link is being configured.</div>}
                 <div><button onClick={()=>setSubmitState('idle')} style={{background:'none',color:'rgba(200,220,255,0.4)',border:'none',cursor:'pointer',fontSize:12.5,marginTop:4,textDecoration:'underline'}}>Submit Another Request</button></div>
               </div>
             ):(
@@ -524,7 +577,7 @@ export default function App() {
             <div style={{marginTop:14,display:'flex',justifyContent:'center',alignItems:'baseline',gap:10}}><span style={{fontSize:24,color:'rgba(255,255,255,0.3)',textDecoration:'line-through'}}>$399</span><span style={{fontSize:52,fontWeight:900,color:'#fff',letterSpacing:'-.05em'}}>$199</span><span style={{fontSize:12,color:'rgba(200,220,255,0.45)'}}>USD</span></div>
             <div style={{fontSize:13,fontWeight:700,color:'#00e676',marginTop:2}}>Refundable consultation deposit</div>
             {PAYMENT_URL ? (
-              <a href={PAYMENT_URL} target="_blank" rel="noopener noreferrer" className="btn-cta" style={{width:'100%',justifyContent:'center',marginTop:22}}><span className="ci">🔐</span>Pay Securely with Skydo<span className="arr">→</span></a>
+              <a href={PAYMENT_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackMetaEvent('InitiateCheckout', { value: PAYMENT_AMOUNT, currency: 'USD' })} className="btn-cta" style={{width:'100%',justifyContent:'center',marginTop:22}}><span className="ci">🔐</span>Pay Securely with Skydo<span className="arr">→</span></a>
             ) : (
               <div style={{marginTop:22,padding:'13px 14px',borderRadius:11,background:'rgba(245,158,11,0.08)',border:'1px solid rgba(245,158,11,0.2)',fontSize:12,color:'rgba(255,255,255,0.62)'}}>Secure payment link is being configured. Please use the consultation form below for now.</div>
             )}
