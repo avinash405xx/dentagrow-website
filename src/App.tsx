@@ -93,16 +93,10 @@ export default function App() {
 
   const EMAIL = 'avinashjayaintelligentgroup@gmail.com';
   const PAYMENT_URL = SKYDO_PAYMENT_URL;
-  const goToPayment = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!PAYMENT_URL) {
-      e.preventDefault();
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
+ 
   const s1=useTilt(9),s2=useTilt(9),s3=useTilt(9),s4=useTilt(9); const sR=[s1,s2,s3,s4];
   const w1=useTilt(7),w2=useTilt(7),w3=useTilt(7),w4=useTilt(7),w5=useTilt(7),w6=useTilt(7); const wR=[w1,w2,w3,w4,w5,w6];
-  const t1=useTilt(6),t2=useTilt(6),t3=useTilt(6); const tR=[t1,t2,t3];
+
 
   const NAV = ['How It Works','Insurance','Why Us','Results','Contact'];
 
