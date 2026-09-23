@@ -503,6 +503,7 @@ export default function App() {
       </section>
 
       {/* PAYMENT */}
+      {submitState==='done' && (
       <section id="reserve" style={{padding:'86px 5%',position:'relative',overflow:'hidden',background:'linear-gradient(135deg,rgba(0,196,160,0.09),rgba(30,127,255,0.08),rgba(4,13,26,0.98))',borderTop:'1px solid rgba(0,196,160,0.18)',borderBottom:'1px solid rgba(0,196,160,0.18)'}}>
         <div className="orb orb1" style={{right:'-260px',top:'-300px'}}/>
         <div style={{maxWidth:1080,margin:'0 auto',position:'relative',zIndex:2,display:'grid',gridTemplateColumns:'1.1fr .9fr',gap:46,alignItems:'center'}}>
@@ -538,6 +539,8 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      )}
 
       {/* FAQ */}
       <section style={{padding:'80px 5%',borderTop:'1px solid rgba(255,255,255,0.05)',position:'relative',overflow:'hidden'}}>
