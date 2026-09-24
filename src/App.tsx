@@ -576,7 +576,27 @@ export default function App() {
                 <div><button onClick={()=>setSubmitState('idle')} style={{background:'none',color:'rgba(200,220,255,0.4)',border:'none',cursor:'pointer',fontSize:12.5,marginTop:4,textDecoration:'underline'}}>Submit Another Request</button></div>
               </div>
             ):(
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} style={{position:'relative'}}>
+                {submitState==='loading'&&(<div style={{position:'absolute',inset:'-24px',zIndex:20,borderRadius:16,background:'rgba(4,13,26,0.94)',backdropFilter:'blur(10px)',WebkitBackdropFilter:'blur(10px)',display:'flex',alignItems:'center',justifyContent:'center',padding:24}}>
+                  <style>{`
+                    @keyframes dgSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+                    @keyframes dgPulse { 0%,100% { transform: scale(1); opacity:.8; } 50% { transform: scale(1.08); opacity:1; } }
+                    @keyframes dgDot { 0%,20% { opacity:.25; } 50% { opacity:1; } 80%,100% { opacity:.25; } }
+                  `}</style>
+                  <div style={{width:'100%',maxWidth:310,textAlign:'center'}}>
+                    <div style={{width:78,height:78,margin:'0 auto 18px',position:'relative',display:'flex',alignItems:'center',justifyContent:'center'}}>
+                      <div style={{position:'absolute',inset:0,borderRadius:'50%',border:'2px solid rgba(0,196,160,0.14)'}}/>
+                      <div style={{position:'absolute',inset:0,borderRadius:'50%',border:'2px solid transparent',borderTopColor:'#00c4a0',borderRightColor:'#1e7fff',animation:'dgSpin 1s linear infinite'}}/>
+                      <div style={{width:50,height:50,borderRadius:'50%',background:'linear-gradient(135deg,rgba(0,196,160,0.18),rgba(30,127,255,0.18))',border:'1px solid rgba(0,196,160,0.28)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:25,animation:'dgPulse 1.8s ease-in-out infinite',boxShadow:'0 0 28px rgba(0,196,160,0.16)'}}>🦷</div>
+                    </div>
+                    <div style={{fontSize:17,color:'#fff',fontWeight:800,marginBottom:7}}>Securing Your Practice Details<span style={{display:'inline-flex',width:20,textAlign:'left',marginLeft:2}}><span style={{animation:'dgDot 1.4s infinite'}}>.</span><span style={{animation:'dgDot 1.4s .2s infinite'}}>.</span><span style={{animation:'dgDot 1.4s .4s infinite'}}>.</span></span></div>
+                    <p style={{fontSize:12.5,color:'rgba(200,220,255,0.58)',lineHeight:1.6,margin:'0 auto 15px',maxWidth:270}}>Sending your practice details securely to the DentaGrow team.</p>
+                    <div style={{display:'flex',justifyContent:'center',gap:7,flexWrap:'wrap'}}>
+                      <span style={{fontSize:10.5,color:'rgba(220,240,255,0.52)',padding:'5px 9px',borderRadius:999,background:'rgba(255,255,255,0.04)',border:'1px solid rgba(255,255,255,0.07)'}}>🔒 Secure submission</span>
+                      <span style={{fontSize:10.5,color:'rgba(220,240,255,0.52)',padding:'5px 9px',borderRadius:999,background:'rgba(255,255,255,0.04)',border:'1px solid rgba(255,255,255,0.07)'}}>🦷 DentaGrow</span>
+                    </div>
+                  </div>
+                </div>)}
                 <h3 style={{fontWeight:800,fontSize:19,color:'#fff',marginBottom:5,letterSpacing:'-0.02em'}}>Tell Us About Your Practice</h3>
                 <p style={{fontSize:11.5,color:'rgba(200,220,255,0.48)',lineHeight:1.55,marginBottom:7}}>If repetitive front-desk work is taking time away from your patients, tell us where it is happening.</p>
                 <p style={{fontSize:11.5,color:'rgba(200,220,255,0.34)',marginBottom:20}}>No sensitive clinical information is needed. There is no payment required to send your details.</p>
