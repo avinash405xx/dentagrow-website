@@ -4,6 +4,8 @@ import { GOOGLE_SHEETS_WEB_APP_URL, SKYDO_PAYMENT_URL } from './lib/config';
 
 type MetaFbq = ((...args: unknown[]) => void) & {
   queue?: unknown[][];
+  callMethod?: (...args: unknown[]) => void;
+  push?: (...args: unknown[]) => void;
   loaded?: boolean;
   version?: string;
 };
@@ -15,6 +17,19 @@ declare global {
 }
 
 const META_PIXEL_ID = '1346550847551454';
+
+/*
+ * Microsoft Clarity — official tracking snippet (project id yn5c1prhi6) ported
+ * to a client-only React effect so it never runs during SSR/build. The queue
+ * stub mirrors the official snippet:
+ *     c[a] = c[a] || function(){ (c[a].q = c[a].q || []).push(arguments) };
+ * Script id: ms-clarity-script Source: https://www.clarity.ms/tag/yn5c1prhi6
+ */
+type ClarityFn = ((...args: unknown[]) => void) & {
+  q?: unknown[][];
+};
+const CLARITY_PROJECT_ID = 'yn5c1prhi6';
+const CLARITY_SCRIPT_ID = 'ms-clarity-script';
 
 function trackMetaEvent(
   eventName: string,
@@ -30,20 +45,6 @@ function trackMetaEvent(
     window.fbq('track', eventName);
   }
 }
-
-/*
- * ⚠️ TEMPORARY QA-ONLY CODE — MUST BE REMOVED AFTER PIXEL TESTING ⚠️
- * These constants exist ONLY to verify the Meta Pixel "Purchase" event from
- * a real browser session. The matching useEffect inside App() fires Purchase
- * exclusively when the site is opened with the QA trigger URL:
- *   https://dentagrow-website.wasmer.app/?pixel_test=purchase
- * It does NOT fire on a normal page load, and it does NOT fire when the
- * Skydo payment button is clicked. Delete this block and the matching
- * useEffect inside App() once the Purchase event has been verified.
- */
-const QA_PIXEL_TEST_PARAM = 'pixel_test';
-const QA_PIXEL_TEST_VALUE = 'purchase';
-let qaPurchaseEventFired = false; // guarantees at most one Purchase event per page load
 
 function useTilt(strength = 12) {
   const ref = useRef<HTMLDivElement>(null);
@@ -85,25 +86,57 @@ export default function App() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (window.fbq || document.getElementById('meta-pixel-script')) return;
 
-    const fbq = ((...args: unknown[]) => {
-      fbq.queue?.push(args);
-    }) as MetaFbq;
+    if (!window.fbq) {
+      const fbq = ((...args: unknown[]) => {
+        if (fbq.callMethod) {
+          fbq.callMethod(...args);
+        } else {
+          fbq.queue?.push(args);
+        }
+      }) as MetaFbq;
 
-    fbq.queue = [];
-    fbq.loaded = true;
-    fbq.version = '2.0';
-    window.fbq = fbq;
+      fbq.queue = [];
+      fbq.loaded = true;
+      fbq.version = '2.0';
+      fbq.push = (...args: unknown[]) => fbq.queue?.push(args);
+      window.fbq = fbq;
+    }
 
-    const script = document.createElement('script');
-    script.id = 'meta-pixel-script';
-    script.async = true;
-    script.src = 'https://connect.facebook.net/en_US/fbevents.js';
-    document.head.appendChild(script);
+    if (!document.getElementById('meta-pixel-script')) {
+      const script = document.createElement('script');
+      script.id = 'meta-pixel-script';
+      script.async = true;
+      script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+      document.head.appendChild(script);
+    }
 
     window.fbq('init', META_PIXEL_ID);
     window.fbq('track', 'PageView');
+  }, []);
+
+  // Microsoft Clarity — official snippet (window.clarity queue stub + async
+  // script tag) ported to a client-only effect. It never runs during SSR/build,
+  // and the script-id guard prevents duplicate injection on re-render/remount.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (document.getElementById(CLARITY_SCRIPT_ID)) return;
+
+    const win = window as Window & { clarity?: ClarityFn };
+
+    if (!win.clarity) {
+      const clarity = ((...args: unknown[]) => {
+        clarity.q?.push(args);
+      }) as ClarityFn;
+      clarity.q = [];
+      win.clarity = clarity;
+    }
+
+    const script = document.createElement('script');
+    script.id = CLARITY_SCRIPT_ID;
+    script.async = true;
+    script.src = `https://www.clarity.ms/tag/${CLARITY_PROJECT_ID}`;
+    document.head.appendChild(script);
   }, []);
 
   useEffect(() => {
@@ -163,24 +196,6 @@ export default function App() {
   const PAYMENT_URL = SKYDO_PAYMENT_URL;
   const PAYMENT_AMOUNT = 199;
 
-  /*
-   * ⚠️ TEMPORARY QA-ONLY CODE — MUST BE REMOVED AFTER PIXEL TESTING ⚠️
-   * (see the QA block at the top of this file)
-   * Fires the Meta Pixel "Purchase" event ONLY when the page is opened with
-   * the QA trigger URL https://dentagrow-website.wasmer.app/?pixel_test=purchase
-   * — never on a normal page load and never on the Skydo payment button click.
-   * The qaPurchaseEventFired flag ensures the event fires only once per page load.
-   */
-  useEffect(() => {
-    if (typeof window === 'undefined' || qaPurchaseEventFired) return;
-    const params = new URLSearchParams(window.location.search);
-    if (params.get(QA_PIXEL_TEST_PARAM) !== QA_PIXEL_TEST_VALUE) return;
-    qaPurchaseEventFired = true;
-    trackMetaEvent('Purchase', {
-      value: PAYMENT_AMOUNT,
-      currency: 'USD',
-    });
-  }, [PAYMENT_AMOUNT]);
 
   const s1=useTilt(9),s2=useTilt(9),s3=useTilt(9),s4=useTilt(9); const sR=[s1,s2,s3,s4];
   const w1=useTilt(7),w2=useTilt(7),w3=useTilt(7),w4=useTilt(7),w5=useTilt(7),w6=useTilt(7); const wR=[w1,w2,w3,w4,w5,w6];
