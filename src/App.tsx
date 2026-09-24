@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { GOOGLE_SHEETS_WEB_APP_URL, SKYDO_PAYMENT_URL } from './lib/config';
+import { GOOGLE_SHEETS_WEB_APP_URL } from './lib/config';
 
 
 type MetaFbq = ((...args: unknown[]) => void) & {
@@ -193,8 +193,6 @@ export default function App() {
   };
 
   const EMAIL = 'avinashjayaintelligentgroup@gmail.com';
-  const PAYMENT_URL = SKYDO_PAYMENT_URL;
-  const PAYMENT_AMOUNT = 199;
 
 
   const s1=useTilt(9),s2=useTilt(9),s3=useTilt(9),s4=useTilt(9); const sR=[s1,s2,s3,s4];
@@ -573,8 +571,8 @@ export default function App() {
               <div style={{textAlign:'center',padding:'30px 0'}}>
                 <div style={{fontSize:50,marginBottom:14,filter:'drop-shadow(0 4px 12px rgba(0,196,160,0.4))'}}>✅</div>
                 <h3 style={{fontWeight:800,fontSize:20,color:'#fff',marginBottom:8}}>You Took the First Step</h3>
-                <p style={{fontSize:13.5,color:'rgba(200,220,255,0.62)',lineHeight:1.7,maxWidth:330,margin:'0 auto 18px'}}>Your practice details are with the DentaGrow team. If the system looks like a fit, the next step is to reserve your consultation. If you are not ready to pay yet, your inquiry is still received.</p>
-                {PAYMENT_URL ? <a href={PAYMENT_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackMetaEvent('InitiateCheckout', { value: PAYMENT_AMOUNT, currency: 'USD' })} className="btn-cta" style={{fontSize:14,marginBottom:12}}><span className="ci">🔐</span>Reserve the Consultation · $199<span className="arr">→</span></a> : <div style={{fontSize:12,color:'rgba(200,220,255,0.4)',marginBottom:12}}>Payment link is being configured.</div>}
+                <p style={{fontSize:13.5,color:'rgba(200,220,255,0.62)',lineHeight:1.7,maxWidth:340,margin:'0 auto 18px'}}>Your practice details are with the DentaGrow team. We will review your inquiry and email you the next steps, including the $199 consultation payment instructions if the consultation is the right fit.</p>
+                <div style={{margin:'0 auto 16px',maxWidth:340,padding:'13px 14px',borderRadius:11,background:'rgba(0,196,160,0.07)',border:'1px solid rgba(0,196,160,0.18)',fontSize:12,color:'rgba(220,240,255,0.62)',lineHeight:1.55}}>📩 <strong style={{color:'#fff'}}>Check your email.</strong> After the $199 payment is completed and confirmed, we will send the consultation/demo connection link.</div>
                 <div><button onClick={()=>setSubmitState('idle')} style={{background:'none',color:'rgba(200,220,255,0.4)',border:'none',cursor:'pointer',fontSize:12.5,marginTop:4,textDecoration:'underline'}}>Submit Another Request</button></div>
               </div>
             ):(
@@ -598,46 +596,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* PAYMENT */}
-      {submitState==='done' && (
-      <section id="reserve" style={{padding:'86px 5%',position:'relative',overflow:'hidden',background:'linear-gradient(135deg,rgba(0,196,160,0.09),rgba(30,127,255,0.08),rgba(4,13,26,0.98))',borderTop:'1px solid rgba(0,196,160,0.18)',borderBottom:'1px solid rgba(0,196,160,0.18)'}}>
-        <div className="orb orb1" style={{right:'-260px',top:'-300px'}}/>
-        <div style={{maxWidth:1080,margin:'0 auto',position:'relative',zIndex:2,display:'grid',gridTemplateColumns:'1.1fr .9fr',gap:46,alignItems:'center'}}>
-          <div>
-            <div className="bdg bteal">Secure Your Consultation</div>
-            <h2 className="sh2">Start With a <span className="gteal">$199 Refundable Deposit</span></h2>
-            <p style={{fontSize:15,color:'rgba(200,220,255,0.68)',lineHeight:1.75,maxWidth:580}}>The consultation is where we review your practice, identify operational and growth bottlenecks, and determine whether DentaGrow is a fit. The deposit is <strong style={{color:'#fff'}}>refundable under the consultation policy</strong>.</p>
-            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,marginTop:24}}>
-              {[
-                {icon:'🔐',title:'Hosted by Skydo',desc:'Payment is completed on Skydo—not by entering bank details into this website.'},
-                {icon:'💳',title:'$399 → $199',desc:'The consultation offer is presented at $199 for the current launch offer.'},
-                {icon:'🧭',title:'Clear Next Step',desc:'After payment, your consultation is the next stage of the DentaGrow process.'},
-                {icon:'🛡',title:'No Clinical Automation',desc:'Clinical judgment and patient-care decisions remain with qualified humans.'},
-              ].map((item,i)=>(
-                <div key={i} style={{display:'flex',gap:10,background:'rgba(255,255,255,0.04)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:14,padding:14}}>
-                  <div style={{fontSize:19}}>{item.icon}</div>
-                  <div><div style={{fontWeight:700,fontSize:12.5,color:'#fff'}}>{item.title}</div><div style={{fontSize:11,color:'rgba(200,220,255,0.46)',lineHeight:1.5,marginTop:3}}>{item.desc}</div></div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="fcard" style={{transform:'perspective(900px) rotateY(-3deg)',textAlign:'center',position:'relative'}}>
-            <div style={{fontSize:12,fontWeight:700,color:'#00c4a0',letterSpacing:'.12em',textTransform:'uppercase'}}>DentaGrow Consultation</div>
-            <div style={{marginTop:14,display:'flex',justifyContent:'center',alignItems:'baseline',gap:10}}><span style={{fontSize:24,color:'rgba(255,255,255,0.3)',textDecoration:'line-through'}}>$399</span><span style={{fontSize:52,fontWeight:900,color:'#fff',letterSpacing:'-.05em'}}>$199</span><span style={{fontSize:12,color:'rgba(200,220,255,0.45)'}}>USD</span></div>
-            <div style={{fontSize:13,fontWeight:700,color:'#00e676',marginTop:2}}>Refundable consultation deposit</div>
-            {PAYMENT_URL ? (
-              <a href={PAYMENT_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackMetaEvent('InitiateCheckout', { value: PAYMENT_AMOUNT, currency: 'USD' })} className="btn-cta" style={{width:'100%',justifyContent:'center',marginTop:22}}><span className="ci">🔐</span>Pay Securely with Skydo<span className="arr">→</span></a>
-            ) : (
-              <div style={{marginTop:22,padding:'13px 14px',borderRadius:11,background:'rgba(245,158,11,0.08)',border:'1px solid rgba(245,158,11,0.2)',fontSize:12,color:'rgba(255,255,255,0.62)'}}>Secure payment link is being configured. Please use the consultation form below for now.</div>
-            )}
-            <div style={{display:'flex',justifyContent:'center',gap:12,flexWrap:'wrap',marginTop:16,fontSize:10.5,color:'rgba(200,220,255,0.34)'}}><span>🔒 Secure hosted payment</span><span>•</span><span>💳 USD</span><span>•</span><span>🛡 Bank details stay off-site</span></div>
-            <p style={{fontSize:10.5,color:'rgba(200,220,255,0.27)',lineHeight:1.55,margin:'14px auto 0',maxWidth:320}}>Refunds are subject to the consultation/refund policy and payment-provider processing rules. We do not promise instant or automatic refunds unless the applicable payment process supports them.</p>
-          </div>
-        </div>
-      </section>
-
-      )}
-
       {/* FAQ */}
       <section style={{padding:'80px 5%',borderTop:'1px solid rgba(255,255,255,0.05)',position:'relative',overflow:'hidden'}}>
         <div style={{position:'absolute',bottom:'-30%',right:'-10%',width:600,height:600,borderRadius:'50%',background:'rgba(30,127,255,0.04)',filter:'blur(80px)',pointerEvents:'none'}}/>
@@ -649,12 +607,12 @@ export default function App() {
           <div style={{display:'flex',flexDirection:'column',gap:9}}>
             {[
               {q:'What is the $199 payment?',a:'It is a refundable consultation deposit for a DentaGrow Growth & Practice Automation Consultation. The consultation is used to review your practice, identify bottlenecks and determine whether DentaGrow is a fit. Refunds remain subject to the applicable consultation/refund policy.'},
-              {q:'Is payment handled securely?',a:'Yes. The DentaGrow website does not ask you to enter bank credentials. The payment CTA opens the hosted Skydo payment page. Payment-provider terms and processing rules apply.'},
+              {q:'How do I pay the $199 consultation deposit?',a:'After your inquiry is reviewed, we will email you the payment instructions for the $199 consultation deposit. Payment is completed on the hosted Skydo payment page, not by entering bank credentials on this website.'},
               {q:'Do I need a website already?',a:'No. If your practice does not have a suitable website or patient-facing landing experience, a DentaGrow website experience can be included in the implementation when appropriate.'},
               {q:'Can DentaGrow add a chatbot?',a:'Yes. A website chatbot can be included when it solves a real patient-capture or communication need for the practice.'},
               {q:'Can DentaGrow handle dental insurance workflows?',a:'It can support insurance intake, verification status, benefits information and exception workflows where the practice software and payer connectivity support them. Insurance responses are not treated as guaranteed coverage, and exceptions can be routed to staff for review.'},
               {q:'Does DentaGrow replace my front desk?',a:'No. DentaGrow is designed to automate repetitive communication and workflow tasks while keeping your team in control of clinical, complex or exception-based work.'},
-              {q:'What happens after I pay?',a:'The consultation is the next step. We review the practice, discuss the current systems and workflow, and determine what should be automated, what should remain human and what implementation makes commercial sense.'},
+              {q:'What happens after I pay?',a:'After the $199 payment is completed and confirmed, we will send you the consultation/demo connection link. During the session, we review the practice, discuss the current systems and workflow, and determine what should be automated, what should remain human and what implementation makes commercial sense.'},
               {q:'Will you guarantee a specific number of new patients?',a:'No fixed patient count is promised on this website. Results depend on the practice, market, offer, budget, patient demand, follow-up and operational execution. DentaGrow measures actual performance after implementation.'},
               {q:'What if I already have enough patients?',a:'Acquisition is optional. DentaGrow can focus on operational workflows such as scheduling support, missed-call recovery, reminders, recall, reactivation, patient communication and reporting.'},
             ].map((item,i)=>(
