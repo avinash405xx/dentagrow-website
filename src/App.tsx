@@ -202,6 +202,42 @@ export default function App() {
 
   return (
     <div style={{background:'#040d1a',color:'#f0f6ff',fontFamily:"'Inter',system-ui,sans-serif",minHeight:'100vh',overflowX:'hidden'}}>
+      {submitState === 'loading' && (
+        <>
+          <style>{`
+            @keyframes dg-spin { to { transform: rotate(360deg); } }
+            @keyframes dg-pulse { 0%,100% { transform: scale(1); opacity:.75; } 50% { transform: scale(1.08); opacity:1; } }
+            @keyframes dg-dot { 0%,20% { opacity:0; } 50% { opacity:1; } 100% { opacity:0; } }
+            .dg-loading-overlay { position:fixed; inset:0; z-index:99999; display:flex; align-items:center; justify-content:center; background:rgba(2,10,24,.88); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+            .dg-loader-ring { position:absolute; width:118px; height:118px; border:3px solid rgba(37,211,238,.16); border-top-color:#25d3ee; border-right-color:#168bff; border-radius:50%; animation:dg-spin 1.05s linear infinite; }
+            .dg-loader-ring2 { position:absolute; width:92px; height:92px; border:2px solid rgba(30,127,255,.12); border-bottom-color:#00d7b5; border-left-color:#25d3ee; border-radius:50%; animation:dg-spin .8s linear infinite reverse; }
+            .dg-tooth { width:54px; height:54px; display:flex; align-items:center; justify-content:center; border-radius:18px; background:linear-gradient(135deg,#168bff,#00d7b5); box-shadow:0 0 35px rgba(0,215,181,.28); font-size:28px; animation:dg-pulse 1.5s ease-in-out infinite; }
+            .dg-loading-card { width:min(92vw,430px); text-align:center; padding:34px 28px; border:1px solid rgba(80,210,255,.18); border-radius:24px; background:rgba(5,18,38,.94); box-shadow:0 25px 80px rgba(0,0,0,.45); }
+            .dg-loading-icon { position:relative; width:118px; height:118px; margin:0 auto 24px; display:flex; align-items:center; justify-content:center; }
+            .dg-dots span { animation:dg-dot 1.4s infinite; opacity:0; }
+            .dg-dots span:nth-child(2) { animation-delay:.18s; }
+            .dg-dots span:nth-child(3) { animation-delay:.36s; }
+          `}</style>
+          <div className="dg-loading-overlay" role="status" aria-live="polite" aria-label="Submitting your practice details">
+            <div className="dg-loading-card">
+              <div className="dg-loading-icon">
+                <div className="dg-loader-ring" />
+                <div className="dg-loader-ring2" />
+                <div className="dg-tooth">🦷</div>
+              </div>
+              <div style={{fontSize:20,fontWeight:800,letterSpacing:'-0.02em',color:'#f0f6ff'}}>
+                Securing Your Practice Details<span className="dg-dots"><span>.</span><span>.</span><span>.</span></span>
+              </div>
+              <div style={{marginTop:10,fontSize:13,color:'rgba(200,220,255,.64)',lineHeight:1.65}}>
+                Sending your practice details securely to the DentaGrow team.
+              </div>
+              <div style={{marginTop:18,display:'inline-flex',alignItems:'center',gap:8,padding:'7px 12px',borderRadius:999,border:'1px solid rgba(80,210,255,.14)',background:'rgba(255,255,255,.03)',fontSize:11,color:'rgba(220,235,255,.58)'}}>
+                <span>🔒</span> Secure submission <span style={{opacity:.4}}>•</span> <span>🦷</span> DentaGrow
+              </div>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* NAV */}
       <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:300,height:62,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 5%',background:scrolled||menuOpen?'rgba(4,10,20,0.97)':'transparent',backdropFilter:scrolled||menuOpen?'blur(20px)':'none',borderBottom:scrolled||menuOpen?'1px solid rgba(255,255,255,0.07)':'none',transition:'background 0.3s,backdrop-filter 0.3s'}}>
