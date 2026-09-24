@@ -193,6 +193,7 @@ export default function App() {
   };
 
   const EMAIL = 'avinashjayaintelligentgroup@gmail.com';
+  const CAL = 'https://calendly.com/avinashjayaintelligentgroup/30min';
 
 
   const s1=useTilt(9),s2=useTilt(9),s3=useTilt(9),s4=useTilt(9); const sR=[s1,s2,s3,s4];
@@ -205,34 +206,50 @@ export default function App() {
       {submitState === 'loading' && (
         <>
           <style>{`
-            @keyframes dg-spin { to { transform: rotate(360deg); } }
-            @keyframes dg-pulse { 0%,100% { transform: scale(1); opacity:.75; } 50% { transform: scale(1.08); opacity:1; } }
-            @keyframes dg-dot { 0%,20% { opacity:0; } 50% { opacity:1; } 100% { opacity:0; } }
-            .dg-loading-overlay { position:fixed; inset:0; z-index:99999; display:flex; align-items:center; justify-content:center; background:rgba(2,10,24,.88); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
-            .dg-loader-ring { position:absolute; width:118px; height:118px; border:3px solid rgba(37,211,238,.16); border-top-color:#25d3ee; border-right-color:#168bff; border-radius:50%; animation:dg-spin 1.05s linear infinite; }
-            .dg-loader-ring2 { position:absolute; width:92px; height:92px; border:2px solid rgba(30,127,255,.12); border-bottom-color:#00d7b5; border-left-color:#25d3ee; border-radius:50%; animation:dg-spin .8s linear infinite reverse; }
-            .dg-tooth { width:54px; height:54px; display:flex; align-items:center; justify-content:center; border-radius:18px; background:linear-gradient(135deg,#168bff,#00d7b5); box-shadow:0 0 35px rgba(0,215,181,.28); font-size:28px; animation:dg-pulse 1.5s ease-in-out infinite; }
-            .dg-loading-card { width:min(92vw,430px); text-align:center; padding:34px 28px; border:1px solid rgba(80,210,255,.18); border-radius:24px; background:rgba(5,18,38,.94); box-shadow:0 25px 80px rgba(0,0,0,.45); }
-            .dg-loading-icon { position:relative; width:118px; height:118px; margin:0 auto 24px; display:flex; align-items:center; justify-content:center; }
-            .dg-dots span { animation:dg-dot 1.4s infinite; opacity:0; }
-            .dg-dots span:nth-child(2) { animation-delay:.18s; }
-            .dg-dots span:nth-child(3) { animation-delay:.36s; }
+            @keyframes dgOrbit { to { transform: rotate(360deg); } }
+            @keyframes dgOrbitReverse { to { transform: rotate(-360deg); } }
+            @keyframes dgGlow { 0%,100% { transform: scale(.94); opacity:.72; } 50% { transform: scale(1.06); opacity:1; } }
+            @keyframes dgDot { 0%,20% { opacity:.18; transform:translateY(0); } 50% { opacity:1; transform:translateY(-2px); } 80%,100% { opacity:.18; transform:translateY(0); } }
+            @keyframes dgSweep { 0% { transform:translateX(-110%); } 55%,100% { transform:translateX(110%); } }
+            @keyframes dgCheck { 0%,100% { opacity:.45; } 50% { opacity:1; } }
+            .dg-submit-overlay { position:fixed; inset:0; z-index:99999; display:flex; align-items:center; justify-content:center; padding:24px; background:rgba(2,9,21,.84); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+            .dg-submit-card { width:min(92vw,460px); text-align:center; padding:36px 30px 30px; border:1px solid rgba(80,210,255,.2); border-radius:26px; background:linear-gradient(145deg,rgba(7,22,43,.98),rgba(4,13,28,.97)); box-shadow:0 30px 100px rgba(0,0,0,.55),0 0 70px rgba(0,196,160,.08); overflow:hidden; position:relative; }
+            .dg-submit-card:before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,#00c4a0,#1e7fff,transparent); opacity:.8; }
+            .dg-loader { width:132px; height:132px; margin:0 auto 24px; position:relative; display:flex; align-items:center; justify-content:center; }
+            .dg-loader .ring-a { position:absolute; inset:0; border-radius:50%; border:2px solid rgba(255,255,255,.07); border-top-color:#00c4a0; border-right-color:#1e7fff; animation:dgOrbit 1s linear infinite; }
+            .dg-loader .ring-b { position:absolute; inset:12px; border-radius:50%; border:2px solid rgba(255,255,255,.055); border-bottom-color:#25d3ee; border-left-color:#00c4a0; animation:dgOrbitReverse 1.45s linear infinite; }
+            .dg-loader .ring-c { position:absolute; inset:27px; border-radius:50%; border:1px dashed rgba(37,211,238,.25); animation:dgOrbit 3s linear infinite; }
+            .dg-loader .core { width:58px; height:58px; border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:29px; background:linear-gradient(135deg,#168bff,#00c4a0); box-shadow:0 0 35px rgba(0,196,160,.28),inset 0 1px 0 rgba(255,255,255,.28); animation:dgGlow 1.6s ease-in-out infinite; }
+            .dg-loader .dot { position:absolute; width:5px; height:5px; border-radius:50%; background:#25d3ee; box-shadow:0 0 12px rgba(37,211,238,.8); }
+            .dg-loader .dot.one { top:8px; right:25px; animation:dgCheck 1.1s infinite; }
+            .dg-loader .dot.two { bottom:19px; left:17px; animation:dgCheck 1.1s .3s infinite; }
+            .dg-loader .dot.three { top:34px; left:4px; animation:dgCheck 1.1s .6s infinite; }
+            .dg-submit-title { font-size:20px; font-weight:850; letter-spacing:-.025em; color:#fff; }
+            .dg-submit-sub { margin:10px auto 0; max-width:350px; font-size:13px; line-height:1.65; color:rgba(210,228,255,.64); }
+            .dg-submit-dots span { display:inline-block; animation:dgDot 1.2s infinite; }
+            .dg-submit-dots span:nth-child(2){animation-delay:.18s}.dg-submit-dots span:nth-child(3){animation-delay:.36s}
+            .dg-progress { height:4px; width:100%; margin:22px 0 17px; border-radius:999px; background:rgba(255,255,255,.06); overflow:hidden; position:relative; }
+            .dg-progress:after { content:''; position:absolute; inset:0; width:42%; background:linear-gradient(90deg,transparent,#00c4a0,#25d3ee,transparent); filter:drop-shadow(0 0 8px rgba(37,211,238,.5)); animation:dgSweep 1.5s ease-in-out infinite; }
+            .dg-submit-meta { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; }
+            .dg-submit-pill { padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.035); color:rgba(220,235,255,.55); font-size:10.5px; }
+            @media (prefers-reduced-motion:reduce) { .dg-loader *,.dg-submit-dots span,.dg-progress:after { animation:none !important; } }
           `}</style>
-          <div className="dg-loading-overlay" role="status" aria-live="polite" aria-label="Submitting your practice details">
-            <div className="dg-loading-card">
-              <div className="dg-loading-icon">
-                <div className="dg-loader-ring" />
-                <div className="dg-loader-ring2" />
-                <div className="dg-tooth">🦷</div>
+          <div className="dg-submit-overlay" role="status" aria-live="polite" aria-label="Submitting your practice details">
+            <div className="dg-submit-card">
+              <div className="dg-loader" aria-hidden="true">
+                <div className="ring-a"/><div className="ring-b"/><div className="ring-c"/>
+                <div className="core">🦷</div>
+                <span className="dot one"/><span className="dot two"/><span className="dot three"/>
               </div>
-              <div style={{fontSize:20,fontWeight:800,letterSpacing:'-0.02em',color:'#f0f6ff'}}>
-                Securing Your Practice Details<span className="dg-dots"><span>.</span><span>.</span><span>.</span></span>
+              <div className="dg-submit-title">
+                Securing Your Practice Details<span className="dg-submit-dots"><span>.</span><span>.</span><span>.</span></span>
               </div>
-              <div style={{marginTop:10,fontSize:13,color:'rgba(200,220,255,.64)',lineHeight:1.65}}>
-                Sending your practice details securely to the DentaGrow team.
-              </div>
-              <div style={{marginTop:18,display:'inline-flex',alignItems:'center',gap:8,padding:'7px 12px',borderRadius:999,border:'1px solid rgba(80,210,255,.14)',background:'rgba(255,255,255,.03)',fontSize:11,color:'rgba(220,235,255,.58)'}}>
-                <span>🔒</span> Secure submission <span style={{opacity:.4}}>•</span> <span>🦷</span> DentaGrow
+              <p className="dg-submit-sub">Connecting your request securely with the DentaGrow team. Please keep this window open for a moment.</p>
+              <div className="dg-progress" aria-hidden="true"/>
+              <div className="dg-submit-meta">
+                <span className="dg-submit-pill">🔒 Secure submission</span>
+                <span className="dg-submit-pill">🦷 DentaGrow</span>
+                <span className="dg-submit-pill">✓ Almost there</span>
               </div>
             </div>
           </div>
@@ -607,32 +624,14 @@ export default function App() {
               <div style={{textAlign:'center',padding:'30px 0'}}>
                 <div style={{fontSize:50,marginBottom:14,filter:'drop-shadow(0 4px 12px rgba(0,196,160,0.4))'}}>✅</div>
                 <h3 style={{fontWeight:800,fontSize:20,color:'#fff',marginBottom:8}}>You Took the First Step</h3>
-                <p style={{fontSize:13.5,color:'rgba(200,220,255,0.62)',lineHeight:1.7,maxWidth:340,margin:'0 auto 18px'}}>Your practice details are with the DentaGrow team. We will review your inquiry and email you the next steps, including the $199 consultation payment instructions if the consultation is the right fit.</p>
-                <div style={{margin:'0 auto 16px',maxWidth:340,padding:'13px 14px',borderRadius:11,background:'rgba(0,196,160,0.07)',border:'1px solid rgba(0,196,160,0.18)',fontSize:12,color:'rgba(220,240,255,0.62)',lineHeight:1.55}}>📩 <strong style={{color:'#fff'}}>Check your email.</strong> After the $199 payment is completed and confirmed, we will send the consultation/demo connection link.</div>
+                <p style={{fontSize:13.5,color:'rgba(200,220,255,0.62)',lineHeight:1.7,maxWidth:360,margin:'0 auto 18px'}}>Your practice details are with the DentaGrow team. Choose a consultation time below so we know when to connect with you.</p>
+                <a href={CAL} target="_blank" rel="noreferrer" style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8,width:'100%',maxWidth:340,margin:'0 auto 14px',padding:'14px 18px',borderRadius:12,background:'linear-gradient(135deg,#168bff,#00d7b5)',color:'#fff',fontSize:14,fontWeight:800,textDecoration:'none',boxShadow:'0 10px 30px rgba(0,196,160,0.25)',boxSizing:'border-box'}}>📅 Book Your Consultation →</a>
+                <div style={{margin:'0 auto 10px',maxWidth:340,padding:'13px 14px',borderRadius:11,background:'rgba(30,127,255,0.07)',border:'1px solid rgba(30,127,255,0.18)',fontSize:12,color:'rgba(220,240,255,0.66)',lineHeight:1.6}}>📩 <strong style={{color:'#fff'}}>Payment is handled by email.</strong> After we review your request, you will receive the $199 payment link by email. There is no payment form on this website.</div>
+                <div style={{margin:'0 auto',maxWidth:340,padding:'11px 14px',borderRadius:11,background:'rgba(0,196,160,0.06)',border:'1px solid rgba(0,196,160,0.16)',fontSize:12,color:'rgba(220,240,255,0.62)',lineHeight:1.6}}>⏱ <strong style={{color:'#fff'}}>After payment:</strong> Once your payment is completed and confirmed, we will connect with you within 1 business hour and send the connection details to your email.</div>
                 <div><button onClick={()=>setSubmitState('idle')} style={{background:'none',color:'rgba(200,220,255,0.4)',border:'none',cursor:'pointer',fontSize:12.5,marginTop:4,textDecoration:'underline'}}>Submit Another Request</button></div>
               </div>
             ):(
               <form onSubmit={handleSubmit} style={{position:'relative'}}>
-                {submitState==='loading'&&(<div style={{position:'absolute',inset:'-24px',zIndex:20,borderRadius:16,background:'rgba(4,13,26,0.94)',backdropFilter:'blur(10px)',WebkitBackdropFilter:'blur(10px)',display:'flex',alignItems:'center',justifyContent:'center',padding:24}}>
-                  <style>{`
-                    @keyframes dgSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-                    @keyframes dgPulse { 0%,100% { transform: scale(1); opacity:.8; } 50% { transform: scale(1.08); opacity:1; } }
-                    @keyframes dgDot { 0%,20% { opacity:.25; } 50% { opacity:1; } 80%,100% { opacity:.25; } }
-                  `}</style>
-                  <div style={{width:'100%',maxWidth:310,textAlign:'center'}}>
-                    <div style={{width:78,height:78,margin:'0 auto 18px',position:'relative',display:'flex',alignItems:'center',justifyContent:'center'}}>
-                      <div style={{position:'absolute',inset:0,borderRadius:'50%',border:'2px solid rgba(0,196,160,0.14)'}}/>
-                      <div style={{position:'absolute',inset:0,borderRadius:'50%',border:'2px solid transparent',borderTopColor:'#00c4a0',borderRightColor:'#1e7fff',animation:'dgSpin 1s linear infinite'}}/>
-                      <div style={{width:50,height:50,borderRadius:'50%',background:'linear-gradient(135deg,rgba(0,196,160,0.18),rgba(30,127,255,0.18))',border:'1px solid rgba(0,196,160,0.28)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:25,animation:'dgPulse 1.8s ease-in-out infinite',boxShadow:'0 0 28px rgba(0,196,160,0.16)'}}>🦷</div>
-                    </div>
-                    <div style={{fontSize:17,color:'#fff',fontWeight:800,marginBottom:7}}>Securing Your Practice Details<span style={{display:'inline-flex',width:20,textAlign:'left',marginLeft:2}}><span style={{animation:'dgDot 1.4s infinite'}}>.</span><span style={{animation:'dgDot 1.4s .2s infinite'}}>.</span><span style={{animation:'dgDot 1.4s .4s infinite'}}>.</span></span></div>
-                    <p style={{fontSize:12.5,color:'rgba(200,220,255,0.58)',lineHeight:1.6,margin:'0 auto 15px',maxWidth:270}}>Sending your practice details securely to the DentaGrow team.</p>
-                    <div style={{display:'flex',justifyContent:'center',gap:7,flexWrap:'wrap'}}>
-                      <span style={{fontSize:10.5,color:'rgba(220,240,255,0.52)',padding:'5px 9px',borderRadius:999,background:'rgba(255,255,255,0.04)',border:'1px solid rgba(255,255,255,0.07)'}}>🔒 Secure submission</span>
-                      <span style={{fontSize:10.5,color:'rgba(220,240,255,0.52)',padding:'5px 9px',borderRadius:999,background:'rgba(255,255,255,0.04)',border:'1px solid rgba(255,255,255,0.07)'}}>🦷 DentaGrow</span>
-                    </div>
-                  </div>
-                </div>)}
                 <h3 style={{fontWeight:800,fontSize:19,color:'#fff',marginBottom:5,letterSpacing:'-0.02em'}}>Tell Us About Your Practice</h3>
                 <p style={{fontSize:11.5,color:'rgba(200,220,255,0.48)',lineHeight:1.55,marginBottom:7}}>If repetitive front-desk work is taking time away from your patients, tell us where it is happening.</p>
                 <p style={{fontSize:11.5,color:'rgba(200,220,255,0.34)',marginBottom:20}}>No sensitive clinical information is needed. There is no payment required to send your details.</p>
@@ -663,12 +662,12 @@ export default function App() {
           <div style={{display:'flex',flexDirection:'column',gap:9}}>
             {[
               {q:'What is the $199 payment?',a:'It is a refundable consultation deposit for a DentaGrow Growth & Practice Automation Consultation. The consultation is used to review your practice, identify bottlenecks and determine whether DentaGrow is a fit. Refunds remain subject to the applicable consultation/refund policy.'},
-              {q:'How do I pay the $199 consultation deposit?',a:'After your inquiry is reviewed, we will email you the payment instructions for the $199 consultation deposit. Payment is completed on the hosted Skydo payment page, not by entering bank credentials on this website.'},
+              {q:'How do I pay the $199 consultation deposit?',a:'After your inquiry is reviewed, we will email you the $199 payment link. Payment is completed on the hosted Skydo payment page; this website does not collect payment details.'},
               {q:'Do I need a website already?',a:'No. If your practice does not have a suitable website or patient-facing landing experience, a DentaGrow website experience can be included in the implementation when appropriate.'},
               {q:'Can DentaGrow add a chatbot?',a:'Yes. A website chatbot can be included when it solves a real patient-capture or communication need for the practice.'},
               {q:'Can DentaGrow handle dental insurance workflows?',a:'It can support insurance intake, verification status, benefits information and exception workflows where the practice software and payer connectivity support them. Insurance responses are not treated as guaranteed coverage, and exceptions can be routed to staff for review.'},
               {q:'Does DentaGrow replace my front desk?',a:'No. DentaGrow is designed to automate repetitive communication and workflow tasks while keeping your team in control of clinical, complex or exception-based work.'},
-              {q:'What happens after I pay?',a:'After the $199 payment is completed and confirmed, we will send you the consultation/demo connection link. During the session, we review the practice, discuss the current systems and workflow, and determine what should be automated, what should remain human and what implementation makes commercial sense.'},
+              {q:'What happens after I pay?',a:'After the $199 payment is completed and confirmed, we will connect with you within 1 business hour and send the connection details to the email you provided. During the session, we review the practice, discuss the current systems and workflow, and determine what should be automated, what should remain human and what implementation makes commercial sense.'},
               {q:'Will you guarantee a specific number of new patients?',a:'No fixed patient count is promised on this website. Results depend on the practice, market, offer, budget, patient demand, follow-up and operational execution. DentaGrow measures actual performance after implementation.'},
               {q:'What if I already have enough patients?',a:'Acquisition is optional. DentaGrow can focus on operational workflows such as scheduling support, missed-call recovery, reminders, recall, reactivation, patient communication and reporting.'},
             ].map((item,i)=>(
