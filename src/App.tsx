@@ -31,6 +31,20 @@ function trackMetaEvent(
   }
 }
 
+/*
+ * ⚠️ TEMPORARY QA-ONLY CODE — MUST BE REMOVED AFTER PIXEL TESTING ⚠️
+ * These constants exist ONLY to verify the Meta Pixel "Purchase" event from
+ * a real browser session. The matching useEffect inside App() fires Purchase
+ * exclusively when the site is opened with the QA trigger URL:
+ *   https://dentagrow-website.wasmer.app/?pixel_test=purchase
+ * It does NOT fire on a normal page load, and it does NOT fire when the
+ * Skydo payment button is clicked. Delete this block and the matching
+ * useEffect inside App() once the Purchase event has been verified.
+ */
+const QA_PIXEL_TEST_PARAM = 'pixel_test';
+const QA_PIXEL_TEST_VALUE = 'purchase';
+let qaPurchaseEventFired = false; // guarantees at most one Purchase event per page load
+
 function useTilt(strength = 12) {
   const ref = useRef<HTMLDivElement>(null);
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -148,6 +162,26 @@ export default function App() {
   const EMAIL = 'avinashjayaintelligentgroup@gmail.com';
   const PAYMENT_URL = SKYDO_PAYMENT_URL;
   const PAYMENT_AMOUNT = 199;
+
+  /*
+   * ⚠️ TEMPORARY QA-ONLY CODE — MUST BE REMOVED AFTER PIXEL TESTING ⚠️
+   * (see the QA block at the top of this file)
+   * Fires the Meta Pixel "Purchase" event ONLY when the page is opened with
+   * the QA trigger URL https://dentagrow-website.wasmer.app/?pixel_test=purchase
+   * — never on a normal page load and never on the Skydo payment button click.
+   * The qaPurchaseEventFired flag ensures the event fires only once per page load.
+   */
+  useEffect(() => {
+    if (typeof window === 'undefined' || qaPurchaseEventFired) return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get(QA_PIXEL_TEST_PARAM) !== QA_PIXEL_TEST_VALUE) return;
+    qaPurchaseEventFired = true;
+    trackMetaEvent('Purchase', {
+      value: PAYMENT_AMOUNT,
+      currency: 'USD',
+    });
+  }, [PAYMENT_AMOUNT]);
+
   const s1=useTilt(9),s2=useTilt(9),s3=useTilt(9),s4=useTilt(9); const sR=[s1,s2,s3,s4];
   const w1=useTilt(7),w2=useTilt(7),w3=useTilt(7),w4=useTilt(7),w5=useTilt(7),w6=useTilt(7); const wR=[w1,w2,w3,w4,w5,w6];
 
