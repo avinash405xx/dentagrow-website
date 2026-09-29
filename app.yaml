@@ -1,0 +1,16 @@
+kind: wasmer.io/App.v0
+name: dentagrow-landing
+app_id: da_nZyIPt1Udmlv
+owner: avinash405xx
+package: .
+env:
+  PORT: '8080'
+  VITE_GOOGLE_SHEETS_WEB_APP_URL: https://script.google.com/macros/s/AKfycbzXRKEJ-BRIcZ2pQvKMwmUBKHH225Z1DbRs2MzKkIDHCcSRh3KhlV-YRLS25BUwjAt5/exec
+health_checks:
+- !http
+  path: /
+  method: get
+  timeout: 10s
+  interval: 30s
+  unhealthy_threshold: 2
+  healthy_threshold: 1

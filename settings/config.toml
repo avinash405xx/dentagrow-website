@@ -1,0 +1,7 @@
+# Static Web Server settings for the DentaGrow landing page.
+[server]
+default = "dist"
+port = 8080
+
+[[host]]
+host = "0.0.0.0"

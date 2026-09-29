@@ -1,20 +1,17 @@
+# Wasmer package manifest for the DentaGrow landing page.
+# Serves the Vite build output (dist/) using Wasmer's Static Web Server.
+#
+# Vite inlines VITE_* variables at BUILD time, so the Google Apps Script Web App
+# URL must be present when `npm run build` runs (locally via .env.local, or on
+# Wasmer via the build environment). The Static Web Server is a pure static
+# file server, so no runtime env var is needed to serve the site.
 [package]
-name = "my_personal_website"
-version = "0.0.0"
-description = "DentaGrow landing page (14-Day DentaGrow Trial - $1)"
-authors = ["AJ Intelligent Group"]
-license = "MIT"
+name = "avinash405xx/dentagrow-landing"
+version = "0.3.0"
+description = "DentaGrow landing page - 14-Day DentaGrow Trial ($1)"
 
 [dependencies]
-nodejs = "22"
+"wasmer/static-web-server" = "1"
 
-[build]
-# Vite needs the Google Apps Script Web App URL at BUILD time (Vite inlines
-# VITE_* variables into the bundle). Provide it as a Wasmer build variable.
-[[build.extra_env]]
-name = "VITE_GOOGLE_SHEETS_WEB_APP_URL"
-value = "https://script.google.com/macros/s/AKfycbzXRKEJ-BRIcZ2pQvKMwmUBKHH225Z1DbRs2MzKkIDHCcSRh3KhlV-YRLS25BUwjAt5/exec"
-
-# Static assets produced by Vite. `staticfile` serves the built dist/ directory.
-[run]
-run = "staticfile --dir dist --path /"
+[fs]
+public = "dist"
