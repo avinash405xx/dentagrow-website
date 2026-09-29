@@ -1,0 +1,20 @@
+[package]
+name = "my_personal_website"
+version = "0.0.0"
+description = "DentaGrow landing page (14-Day DentaGrow Trial - $1)"
+authors = ["AJ Intelligent Group"]
+license = "MIT"
+
+[dependencies]
+nodejs = "22"
+
+[build]
+# Vite needs the Google Apps Script Web App URL at BUILD time (Vite inlines
+# VITE_* variables into the bundle). Provide it as a Wasmer build variable.
+[[build.extra_env]]
+name = "VITE_GOOGLE_SHEETS_WEB_APP_URL"
+value = "https://script.google.com/macros/s/AKfycbzXRKEJ-BRIcZ2pQvKMwmUBKHH225Z1DbRs2MzKkIDHCcSRh3KhlV-YRLS25BUwjAt5/exec"
+
+# Static assets produced by Vite. `staticfile` serves the built dist/ directory.
+[run]
+run = "staticfile --dir dist --path /"
